@@ -1,0 +1,9 @@
+# Python
+/bin/
+/obj/
+/Properties/
+ 
+# Builds
+*.apk
+*.app
+*.exe
