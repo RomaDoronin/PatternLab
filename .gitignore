@@ -1,7 +1,9 @@
-# Python
+# Visual Studio
 /bin/
 /obj/
 /Properties/
+*.config
+*.csproj
  
 # Builds
 *.apk
