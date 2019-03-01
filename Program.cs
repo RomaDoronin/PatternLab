@@ -64,6 +64,31 @@ namespace Pattern_lab
         }
     }
 
+    //class PartiallyZeroVector<T> : IVector<T>
+    //{
+    //    List<T> valList = new List<T>();
+
+    //    public void SetVal(int index, T val)
+    //    {
+    //        valList[index] = val;
+    //    }
+
+    //    public void AddVal(T val)
+    //    {
+    //        valList.Add(val);
+    //    }
+
+    //    public T GetVal(int index)
+    //    {
+    //        return valList[index];
+    //    }
+
+    //    public int GetSize()
+    //    {
+    //        return valList.Count;
+    //    }
+    //}
+
     interface IMatrix
     {
         void SetVal(int indexI, int indexJ, int val);
@@ -233,6 +258,55 @@ namespace Pattern_lab
         }
     }
 
+    //class UpperTriangularMatrix : SomeMatrix
+    //{
+    //    public UpperTriangularMatrix()
+    //    {
+    //        valMatrix = new PartiallyZeroVector<IVector<int>>();
+    //    }
+
+    //    public override void SetVal(int indexI, int indexJ, int val)
+    //    {
+    //        PartiallyZeroVector<int> insideVec = (PartiallyZeroVector<int>)valMatrix.GetVal(indexI);
+    //        insideVec.SetVal(indexJ, val);
+    //        valMatrix.SetVal(indexI, insideVec);
+    //    }
+
+    //    protected override void AddColumn(int num)
+    //    {
+    //        for (int count = 0; count < num; count++)
+    //        {
+    //            for (int indexI = 0; indexI < valMatrix.GetSize(); indexI++)
+    //            {
+    //                PartiallyZeroVector<int> insideVec = (PartiallyZeroVector<int>)valMatrix.GetVal(indexI);
+    //                insideVec.AddVal(0);
+    //                valMatrix.SetVal(indexI, insideVec);
+    //            }
+    //        }
+    //    }
+
+    //    protected override void AddRow(int num)
+    //    {
+    //        for (int count = 0; count < num; count++)
+    //        {
+    //            valMatrix.AddVal(new PartiallyZeroVector<int>());
+    //        }
+    //    }
+
+    //    public override void Print()
+    //    {
+    //        Console.WriteLine("Upper triangular matrix");
+    //        for (int indexI = 0; indexI < GetRowSize(); indexI++)
+    //        {
+    //            for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
+    //            {
+    //                Console.Write(GetVal(indexI, indexJ) + " ");
+    //            }
+    //            Console.WriteLine("|");
+    //        }
+    //    }
+    //}
+
     class MatrixInitializer
     {
         public static void InitMatrix(IMatrix matrix, int notNullNumber, int maxNumber)
@@ -248,7 +322,7 @@ namespace Pattern_lab
 
                     if (rand.Next(1, numOfNumbers) <= notNullNumber)
                     {
-                        val = rand.Next(1, maxNumber);
+                        val = rand.Next(1, maxNumber + 1);
                         notNullNumber--;
                     }
                     else
@@ -339,25 +413,30 @@ namespace Pattern_lab
             Console.WriteLine("Sum elements                : " + matrixStatistic.GetSumValues());
             Console.WriteLine("Average of elements         : " + matrixStatistic.GetAverageValue());
             Console.WriteLine("Max element                 : " + matrixStatistic.GetMaxValue());
-            Console.WriteLine("Number of not null elements : " + matrixStatistic.GetNotNullValuesNumber());
+            Console.WriteLine("Number of not null elements : " + matrixStatistic.GetNotNullValuesNumber() + "\n");
         }
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Client start working");
+            Console.WriteLine("Client start working...");
 
             IMatrix normalMatrix = new NormalMatrix();
-            normalMatrix.SetMatrixSize(5, 3);
-            MatrixInitializer.InitMatrix(normalMatrix, 5, 10);
+            normalMatrix.SetMatrixSize(5, 5);
+            MatrixInitializer.InitMatrix(normalMatrix, 20, 10);
             normalMatrix.Print();
             PrintStatistic(new MatrixStatistic(normalMatrix));
 
             IMatrix sparseMatrix = new SparseMatrix();
-            sparseMatrix.SetMatrixSize(3, 3);
-            MatrixInitializer.InitMatrix(sparseMatrix, 5, 10);
+            sparseMatrix.SetMatrixSize(5, 5);
+            MatrixInitializer.InitMatrix(sparseMatrix, 10, 10);
             sparseMatrix.Print();
             PrintStatistic(new MatrixStatistic(sparseMatrix));
 
+            //IMatrix upperTriangularMatrix = new UpperTriangularMatrix();
+            //upperTriangularMatrix.SetMatrixSize(3, 3);
+            //MatrixInitializer.InitMatrix(upperTriangularMatrix, 5, 10);
+            //upperTriangularMatrix.Print();
+            //PrintStatistic(new MatrixStatistic(upperTriangularMatrix));
         }
     }
 }
