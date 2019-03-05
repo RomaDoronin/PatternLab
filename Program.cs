@@ -185,7 +185,7 @@ namespace Pattern_lab
             {
                 for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
                 {
-                    Console.Write(GetVal(indexI, indexJ) + " ");
+                    Console.Write(GetVal(indexI, indexJ) + "	");
                 }
                 Console.WriteLine("|");
             }
@@ -251,7 +251,7 @@ namespace Pattern_lab
             {
                 for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
                 {
-                    Console.Write(GetVal(indexI, indexJ) + " ");
+                    Console.Write(GetVal(indexI, indexJ) + "	");
                 }
                 Console.WriteLine("|");
             }
