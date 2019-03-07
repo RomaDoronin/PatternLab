@@ -8,6 +8,7 @@ namespace Pattern_lab
 {
     /* System Code Start */
 
+    // ------------------------------------------------------- VECTOR
     interface IVector
     {
         void SetVal(int index, int val);
@@ -73,12 +74,17 @@ namespace Pattern_lab
         }
     }
 
+    // ------------------------------------------------------- MATRIX
     interface IMatrix
     {
         void SetVal(int indexI, int indexJ, int val);
         int GetVal(int indexI, int indexJ);
         int GetColumnSize();
         int GetRowSize();
+
+        // LAB 2
+        void SetVisualizator(IVisualizator _visualizator);
+        void VisualizationMatrix();
     }
 
     abstract class AMatrix : IMatrix
@@ -86,7 +92,7 @@ namespace Pattern_lab
         private IVector valMatrix;
         private int columnSize;
         private int rowSize;
-
+        
         protected abstract IVector Create();
 
         public AMatrix()
@@ -118,6 +124,26 @@ namespace Pattern_lab
         {
             return rowSize;
         }
+
+        // LAB 2
+        private IVisualizator visualizator;
+
+        public void SetVisualizator(IVisualizator _visualizator)
+        {
+            visualizator = _visualizator;
+        }
+
+        public abstract void VisualizationMatrix();
+
+        protected void DrawBorder()
+        {
+            visualizator.DrawBorder(this);
+        }
+
+        protected void DrawCellVal()
+        {
+            visualizator.DrawCellVal(this);
+        }
     }
 
     class NormalMatrix : AMatrix
@@ -126,6 +152,13 @@ namespace Pattern_lab
         {
             return new NormalVector();
         }
+
+        public override void VisualizationMatrix()
+        {
+            Console.WriteLine("Visualization Normal Matrix with 0");
+            DrawBorder();
+            DrawCellVal();
+        }
     }
 
     class SparseMatrix : AMatrix
@@ -133,6 +166,13 @@ namespace Pattern_lab
         protected override IVector Create()
         {
             return new SparseVector();
+        }
+
+        public override void VisualizationMatrix()
+        {
+            Console.WriteLine("Visualization Sparse Matrix without 0");
+            DrawBorder();
+            DrawCellVal();
         }
     }
 
@@ -239,26 +279,36 @@ namespace Pattern_lab
         }
     }
 
-    class MatrixPrint
+    // ------------------------------------------------------- VISUALIZATOR
+    interface IVisualizator
     {
-        private IMatrix matrix;
+        void DrawBorder(IMatrix matrix);
+        void DrawCellVal(IMatrix matrix);
+    }
 
-        public MatrixPrint(IMatrix _matrix)
+    class ConsoleVisualizator : IVisualizator
+    {
+        public void DrawBorder(IMatrix matrix)
         {
-            matrix = _matrix;
+            Console.WriteLine("ConsoleVisualizator: Draw Border");
         }
 
-        public void Print()
+        public void DrawCellVal(IMatrix matrix)
         {
-            Console.WriteLine("Matrix");
-            for (int indexI = 0; indexI < matrix.GetRowSize(); indexI++)
-            {
-                for (int indexJ = 0; indexJ < matrix.GetColumnSize(); indexJ++)
-                {
-                    Console.Write(matrix.GetVal(indexI, indexJ) + "	");
-                }
-                Console.WriteLine("|");
-            }
+            Console.WriteLine("ConsoleVisualizator: Draw Cell Val");
+        }
+    }
+
+    class GraphicsContextVisualizator : IVisualizator
+    {
+        public void DrawBorder(IMatrix matrix)
+        {
+            Console.WriteLine("GraphicsContextVisualizator: Draw Border");
+        }
+
+        public void DrawCellVal(IMatrix matrix)
+        {
+            Console.WriteLine("GraphicsContextVisualizator: Draw Cell Val");
         }
     }
 
@@ -280,9 +330,13 @@ namespace Pattern_lab
 
         private static void PrintMatrix(IMatrix matrix)
         {
-            MatrixPrint matrixPrint = new MatrixPrint(matrix);
+            matrix.SetVisualizator(new ConsoleVisualizator());
+            matrix.VisualizationMatrix();
 
-            matrixPrint.Print();
+            matrix.SetVisualizator(new GraphicsContextVisualizator());
+            matrix.VisualizationMatrix();
+
+            Console.WriteLine();
         }
 
         /* Configurator Code End */
@@ -295,13 +349,13 @@ namespace Pattern_lab
 
             IMatrix normalMatrix = new NormalMatrix();
             MatrixInitializer.InitMatrix(normalMatrix, 7, 10);
-            PrintMatrix(normalMatrix);
             PrintMatrixStatistic(normalMatrix);
+            PrintMatrix(normalMatrix);
 
             IMatrix sparseMatrix = new SparseMatrix();
             MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
-            PrintMatrix(sparseMatrix);
             PrintMatrixStatistic(sparseMatrix);
+            PrintMatrix(sparseMatrix);
 
             /* Client Code End */
         }
