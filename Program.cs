@@ -6,30 +6,37 @@ using System.Threading.Tasks;
 
 namespace Pattern_lab
 {
-    interface IVector<T>
+    /* System Code Start */
+
+    interface IVector
     {
-        void SetVal(int index, T val);
-        void AddVal(T val);
-        T GetVal(int index);
+        void SetVal(int index, int val);
+        int GetVal(int index);
         int GetSize();
     }
 
-    class NormalVector<T> : IVector<T>
+    class NormalVector : IVector
     {
-        List<T> valList = new List<T>();
+        private List<int> valList = new List<int>();
 
-        public void SetVal(int index, T val)
+        public void SetVal(int index, int val)
         {
+            for (int i = GetSize(); i <= index; i++)
+            {
+                valList.Add(0);
+            }
+
             valList[index] = val;
         }
 
-        public void AddVal(T val)
+        public int GetVal(int index)
         {
-            valList.Add(val);
-        }
+            if (index >= GetSize())
+            {
+                Console.WriteLine("ERROR: Going beyond vector. Return -1");
+                return -1;
+            }
 
-        public T GetVal(int index)
-        {
             return valList[index];
         }
 
@@ -39,280 +46,106 @@ namespace Pattern_lab
         }
     }
 
-    class SparseVector<T> : IVector<T>
+    class SparseVector : IVector
     {
-        List<T> valList = new List<T>();
+        private Dictionary<int, int> valDict = new Dictionary<int, int>();
 
-        public void SetVal(int index, T val)
+        public void SetVal(int index, int val)
         {
-            valList[index] = val;
+            valDict[index] = val;
         }
 
-        public void AddVal(T val)
+        public int GetVal(int index)
         {
-            valList.Add(val);
-        }
-
-        public T GetVal(int index)
-        {
-            return valList[index];
+            if (valDict.ContainsKey(index))
+            {
+                return valDict[index];
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         public int GetSize()
         {
-            return valList.Count;
+            return valDict.Keys.Max();
         }
     }
-
-    //class PartiallyZeroVector<T> : IVector<T>
-    //{
-    //    List<T> valList = new List<T>();
-
-    //    public void SetVal(int index, T val)
-    //    {
-    //        valList[index] = val;
-    //    }
-
-    //    public void AddVal(T val)
-    //    {
-    //        valList.Add(val);
-    //    }
-
-    //    public T GetVal(int index)
-    //    {
-    //        return valList[index];
-    //    }
-
-    //    public int GetSize()
-    //    {
-    //        return valList.Count;
-    //    }
-    //}
 
     interface IMatrix
     {
         void SetVal(int indexI, int indexJ, int val);
-        void SetMatrixSize(int RowSize, int ColumnSize); // Not really seting :)
         int GetVal(int indexI, int indexJ);
         int GetColumnSize();
         int GetRowSize();
-        void Print();
     }
 
-    abstract class SomeMatrix : IMatrix
+    abstract class AMatrix : IMatrix
     {
-        protected IVector<IVector<int>> valMatrix;
+        private IVector valMatrix;
+        private int columnSize;
+        private int rowSize;
 
-        public abstract void SetVal(int indexI, int indexJ, int val);
-        public void SetMatrixSize(int RowSize, int ColumnSize)
+        protected abstract IVector Create();
+
+        public AMatrix()
         {
-            AddRow(RowSize);
-            AddColumn(ColumnSize);
+            valMatrix = Create();
+            columnSize = 0;
+            rowSize = 0;
         }
-        protected abstract void AddColumn(int num);
-        protected abstract void AddRow(int num);
+
+        public void SetVal(int indexI, int indexJ, int val)
+        {
+            rowSize = Math.Max(indexI + 1, rowSize);
+            columnSize = Math.Max(indexI + 1, columnSize);
+
+            valMatrix.SetVal(indexI * GetColumnSize() + indexJ, val);
+        }
+
         public int GetVal(int indexI, int indexJ)
         {
-            return valMatrix.GetVal(indexI).GetVal(indexJ);
+            return valMatrix.GetVal(indexI * GetColumnSize() + indexJ);
         }
+
         public int GetColumnSize()
         {
-            return valMatrix.GetVal(0).GetSize();
+            return columnSize;
         }
+
         public int GetRowSize()
         {
-            return valMatrix.GetSize();
+            return rowSize;
         }
-        public abstract void Print();
     }
 
-    class NormalMatrix : SomeMatrix
+    class NormalMatrix : AMatrix
     {
-        //private NormalVector<NormalVector<int>> valMatrix = new NormalVector<NormalVector<int>>();
-
-        public NormalMatrix()
+        protected override IVector Create()
         {
-            valMatrix = new NormalVector<IVector<int>>();
-        }
-
-        public override void SetVal(int indexI, int indexJ, int val)
-        {
-            NormalVector<int> insideVec = (NormalVector<int>)valMatrix.GetVal(indexI);
-            insideVec.SetVal(indexJ, val);
-            valMatrix.SetVal(indexI, insideVec);
-        }
-
-        protected override void AddColumn(int num)
-        {
-            for (int count = 0; count < num; count++)
-            {
-                for (int indexI = 0; indexI < valMatrix.GetSize(); indexI++)
-                {
-                    NormalVector<int> insideVec = (NormalVector<int>)valMatrix.GetVal(indexI);
-                    insideVec.AddVal(0);
-                    valMatrix.SetVal(indexI, insideVec);
-                }
-            }
-        }
-
-        protected override void AddRow(int num)
-        {
-            for (int count = 0; count < num; count++)
-            {
-                valMatrix.AddVal(new NormalVector<int>());
-            }
-        }
-
-        //public override int GetVal(int indexI, int indexJ)
-        //{
-        //    return valMatrix.GetVal(indexI).GetVal(indexJ);
-        //}
-
-        //public override int GetColumnSize()
-        //{
-        //    return valMatrix.GetVal(0).GetSize();
-        //}
-
-        //public override int GetRowSize()
-        //{
-        //    return valMatrix.GetSize();
-        //}
-
-        public override void Print()
-        {
-            Console.WriteLine("Normal matrix");
-            for (int indexI = 0; indexI < GetRowSize(); indexI++)
-            {
-                for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
-                {
-                    Console.Write(GetVal(indexI, indexJ) + "	");
-                }
-                Console.WriteLine("|");
-            }
+            return new NormalVector();
         }
     }
 
-    class SparseMatrix : SomeMatrix
+    class SparseMatrix : AMatrix
     {
-        //SparseVector<SparseVector<int>> valMatrix = new SparseVector<SparseVector<int>>();
-
-        public SparseMatrix()
+        protected override IVector Create()
         {
-            valMatrix = new SparseVector<IVector<int>>();
-        }
-
-        public override void SetVal(int indexI, int indexJ, int val)
-        {
-            SparseVector<int> insideVec = (SparseVector<int>)valMatrix.GetVal(indexI);
-            insideVec.SetVal(indexJ, val);
-            valMatrix.SetVal(indexI, insideVec);
-        }
-
-        protected override void AddColumn(int num)
-        {
-            for (int count = 0; count < num; count++)
-            {
-                for (int indexI = 0; indexI < valMatrix.GetSize(); indexI++)
-                {
-                    SparseVector<int> insideVec = (SparseVector<int>)valMatrix.GetVal(indexI);
-                    insideVec.AddVal(0);
-                    valMatrix.SetVal(indexI, insideVec);
-                }
-            }
-        }
-
-        protected override void AddRow(int num)
-        {
-            for (int count = 0; count < num; count++)
-            {
-                valMatrix.AddVal(new SparseVector<int>());
-            }
-        }
-
-        //public override int GetVal(int indexI, int indexJ)
-        //{
-        //    return valMatrix.GetVal(indexI).GetVal(indexJ);
-        //}
-
-        //public override int GetColumnSize()
-        //{
-        //    return valMatrix.GetVal(0).GetSize();
-        //}
-
-        //public override int GetRowSize()
-        //{
-        //    return valMatrix.GetSize();
-        //}
-
-        public override void Print()
-        {
-            Console.WriteLine("Sparse matrix");
-            for (int indexI = 0; indexI < GetRowSize(); indexI++)
-            {
-                for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
-                {
-                    Console.Write(GetVal(indexI, indexJ) + "	");
-                }
-                Console.WriteLine("|");
-            }
+            return new SparseVector();
         }
     }
-
-    //class UpperTriangularMatrix : SomeMatrix
-    //{
-    //    public UpperTriangularMatrix()
-    //    {
-    //        valMatrix = new PartiallyZeroVector<IVector<int>>();
-    //    }
-
-    //    public override void SetVal(int indexI, int indexJ, int val)
-    //    {
-    //        PartiallyZeroVector<int> insideVec = (PartiallyZeroVector<int>)valMatrix.GetVal(indexI);
-    //        insideVec.SetVal(indexJ, val);
-    //        valMatrix.SetVal(indexI, insideVec);
-    //    }
-
-    //    protected override void AddColumn(int num)
-    //    {
-    //        for (int count = 0; count < num; count++)
-    //        {
-    //            for (int indexI = 0; indexI < valMatrix.GetSize(); indexI++)
-    //            {
-    //                PartiallyZeroVector<int> insideVec = (PartiallyZeroVector<int>)valMatrix.GetVal(indexI);
-    //                insideVec.AddVal(0);
-    //                valMatrix.SetVal(indexI, insideVec);
-    //            }
-    //        }
-    //    }
-
-    //    protected override void AddRow(int num)
-    //    {
-    //        for (int count = 0; count < num; count++)
-    //        {
-    //            valMatrix.AddVal(new PartiallyZeroVector<int>());
-    //        }
-    //    }
-
-    //    public override void Print()
-    //    {
-    //        Console.WriteLine("Upper triangular matrix");
-    //        for (int indexI = 0; indexI < GetRowSize(); indexI++)
-    //        {
-    //            for (int indexJ = 0; indexJ < GetColumnSize(); indexJ++)
-    //            {
-    //                Console.Write(GetVal(indexI, indexJ) + " ");
-    //            }
-    //            Console.WriteLine("|");
-    //        }
-    //    }
-    //}
 
     class MatrixInitializer
     {
         public static void InitMatrix(IMatrix matrix, int notNullNumber, int maxNumber)
         {
-            int numOfNumbers = matrix.GetRowSize() * matrix.GetColumnSize();
             Random rand = new Random(DateTime.Now.Millisecond);
+
+            /* Set matrix size for rand value */
+            matrix.SetVal(rand.Next(2, 5), rand.Next(2, 5), 0);
+
+            int numOfNumbers = matrix.GetRowSize() * matrix.GetColumnSize();
 
             for (int i = 0; i < matrix.GetRowSize(); i++)
             {
@@ -406,37 +239,71 @@ namespace Pattern_lab
         }
     }
 
+    class MatrixPrint
+    {
+        private IMatrix matrix;
+
+        public MatrixPrint(IMatrix _matrix)
+        {
+            matrix = _matrix;
+        }
+
+        public void Print()
+        {
+            Console.WriteLine("Matrix");
+            for (int indexI = 0; indexI < matrix.GetRowSize(); indexI++)
+            {
+                for (int indexJ = 0; indexJ < matrix.GetColumnSize(); indexJ++)
+                {
+                    Console.Write(matrix.GetVal(indexI, indexJ) + "	");
+                }
+                Console.WriteLine("|");
+            }
+        }
+    }
+
+    /* System Code End */
+
     class Program
     {
-        private static void PrintStatistic(MatrixStatistic matrixStatistic)
+        /* Configurator Code Start */
+
+        private static void PrintMatrixStatistic(IMatrix matrix)
         {
+            MatrixStatistic matrixStatistic = new MatrixStatistic(matrix);
+
             Console.WriteLine("Sum elements                : " + matrixStatistic.GetSumValues());
             Console.WriteLine("Average of elements         : " + matrixStatistic.GetAverageValue());
             Console.WriteLine("Max element                 : " + matrixStatistic.GetMaxValue());
             Console.WriteLine("Number of not null elements : " + matrixStatistic.GetNotNullValuesNumber() + "\n");
         }
-        
+
+        private static void PrintMatrix(IMatrix matrix)
+        {
+            MatrixPrint matrixPrint = new MatrixPrint(matrix);
+
+            matrixPrint.Print();
+        }
+
+        /* Configurator Code End */
+
         static void Main(string[] args)
         {
             Console.WriteLine("Client start working...");
 
+            /* Client Code Start */
+
             IMatrix normalMatrix = new NormalMatrix();
-            normalMatrix.SetMatrixSize(5, 5);
-            MatrixInitializer.InitMatrix(normalMatrix, 20, 10);
-            normalMatrix.Print();
-            PrintStatistic(new MatrixStatistic(normalMatrix));
+            MatrixInitializer.InitMatrix(normalMatrix, 7, 10);
+            PrintMatrix(normalMatrix);
+            PrintMatrixStatistic(normalMatrix);
 
             IMatrix sparseMatrix = new SparseMatrix();
-            sparseMatrix.SetMatrixSize(5, 5);
-            MatrixInitializer.InitMatrix(sparseMatrix, 10, 10);
-            sparseMatrix.Print();
-            PrintStatistic(new MatrixStatistic(sparseMatrix));
+            MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
+            PrintMatrix(sparseMatrix);
+            PrintMatrixStatistic(sparseMatrix);
 
-            //IMatrix upperTriangularMatrix = new UpperTriangularMatrix();
-            //upperTriangularMatrix.SetMatrixSize(3, 3);
-            //MatrixInitializer.InitMatrix(upperTriangularMatrix, 5, 10);
-            //upperTriangularMatrix.Print();
-            //PrintStatistic(new MatrixStatistic(upperTriangularMatrix));
+            /* Client Code End */
         }
     }
 }
