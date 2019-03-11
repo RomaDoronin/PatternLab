@@ -9,3 +9,7 @@
 *.apk
 *.app
 *.exe
+
+# Windows
+*.sh
+*.bat
