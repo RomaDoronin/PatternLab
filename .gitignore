@@ -6,6 +6,11 @@
 *.csproj
  
 # Builds
+/build/
+*.bat
 *.apk
 *.app
 *.exe
+
+# Temporary file
+visual.txt

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Pattern_lab
 {
@@ -83,8 +84,8 @@ namespace Pattern_lab
         int GetRowSize();
 
         // LAB 2
-        void SetVisualizator(IVisualizator _visualizator);
-        void VisualizationMatrix();
+        //void SetVisualizator(IVisualizator _visualizator);
+        void VisualizationMatrix(IVisualizator _visualizator);
     }
 
     abstract class AMatrix : IMatrix
@@ -128,22 +129,22 @@ namespace Pattern_lab
         // LAB 2
         private IVisualizator visualizator;
 
-        public void SetVisualizator(IVisualizator _visualizator)
+        /*public void SetVisualizator(IVisualizator _visualizator)
         {
             visualizator = _visualizator;
-        }
+        }*/
 
-        public abstract void VisualizationMatrix();
+        public abstract void VisualizationMatrix(IVisualizator _visualizator);
 
-        protected void DrawBorder()
+        /*protected void DrawBorder()
         {
             visualizator.DrawBorder(this);
         }
 
-        protected void DrawCellVal()
+        protected void DrawCellVal(int i, int j)
         {
-            visualizator.DrawCellVal(this);
-        }
+            visualizator.DrawCellVal(this, i, j);
+        }*/
     }
 
     class NormalMatrix : AMatrix
@@ -153,11 +154,18 @@ namespace Pattern_lab
             return new NormalVector();
         }
 
-        public override void VisualizationMatrix()
-        {
-            Console.WriteLine("Visualization Normal Matrix with 0");
-            DrawBorder();
-            DrawCellVal();
+        public override void VisualizationMatrix(IVisualizator _visualizator)
+        {			
+            Console.WriteLine("Visualization Normal Matrix");
+            _visualizator.DrawBorder(this);
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    _visualizator.DrawCellVal(this, i, j);
+                }
+            }
+            
         }
     }
 
@@ -168,11 +176,18 @@ namespace Pattern_lab
             return new SparseVector();
         }
 
-        public override void VisualizationMatrix()
+        public override void VisualizationMatrix(IVisualizator _visualizator)
         {
-            Console.WriteLine("Visualization Sparse Matrix without 0");
-            DrawBorder();
-            DrawCellVal();
+            Console.WriteLine("Visualization Sparse Matrix");
+            _visualizator.DrawBorder(this);
+            for (int i = 0; i < GetRowSize(); i++)
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    if (GetVal(i,j) != 0)
+                        _visualizator.DrawCellVal(this, i, j);
+					else
+						_visualizator.DrawCellVal(this, -1, j);
+                }
         }
     }
 
@@ -283,19 +298,31 @@ namespace Pattern_lab
     interface IVisualizator
     {
         void DrawBorder(IMatrix matrix);
-        void DrawCellVal(IMatrix matrix);
+        void DrawCellVal(IMatrix matrix, int i, int j);
     }
 
     class ConsoleVisualizator : IVisualizator
     {
+		char border = ' ';
+		
         public void DrawBorder(IMatrix matrix)
         {
             Console.WriteLine("ConsoleVisualizator: Draw Border");
+			border = '|';
         }
 
-        public void DrawCellVal(IMatrix matrix)
+        public void DrawCellVal(IMatrix matrix, int i, int j)
         {
-            Console.WriteLine("ConsoleVisualizator: Draw Cell Val");
+			if (j == 0)
+				Console.Write(border + "	");
+			
+			if (i == -1)
+				Console.Write("_	");
+			else
+				Console.Write(matrix.GetVal(i,j) + "	");
+			
+			if (j == (matrix.GetColumnSize() - 1))
+				Console.WriteLine(border);
         }
     }
 
@@ -306,9 +333,38 @@ namespace Pattern_lab
             Console.WriteLine("GraphicsContextVisualizator: Draw Border");
         }
 
-        public void DrawCellVal(IMatrix matrix)
+        public void DrawCellVal(IMatrix matrix, int i, int j)
         {
-            Console.WriteLine("GraphicsContextVisualizator: Draw Cell Val");
+            Console.WriteLine("GraphicsContextVisualizator: Draw Cell Val i:" + i + ", j:" + j);
+        }
+    }
+	
+    class XSMLVisualizator : IVisualizator
+    {
+		char border = ' ';
+		
+        public void DrawBorder(IMatrix matrix)
+        {
+			border = '|';
+			File.WriteAllText("visual.txt", "");
+        }
+
+        public void DrawCellVal(IMatrix matrix, int i, int j)
+        {
+			string str = "";
+			
+			if (j == 0)
+				str += border.ToString() + "	";
+			
+			if (i == -1)
+				str += "_	";
+			else
+				str += matrix.GetVal(i,j).ToString() + "	";
+			
+			if (j == (matrix.GetColumnSize() - 1))
+				str += border.ToString() + "\n";
+			
+			File.AppendAllText("visual.txt", str);
         }
     }
 
@@ -330,11 +386,8 @@ namespace Pattern_lab
 
         private static void PrintMatrix(IMatrix matrix)
         {
-            matrix.SetVisualizator(new ConsoleVisualizator());
-            matrix.VisualizationMatrix();
-
-            matrix.SetVisualizator(new GraphicsContextVisualizator());
-            matrix.VisualizationMatrix();
+            //matrix.SetVisualizator(new XSMLVisualizator());
+            matrix.VisualizationMatrix(new ConsoleVisualizator());
 
             Console.WriteLine();
         }
@@ -349,12 +402,12 @@ namespace Pattern_lab
 
             IMatrix normalMatrix = new NormalMatrix();
             MatrixInitializer.InitMatrix(normalMatrix, 7, 10);
-            PrintMatrixStatistic(normalMatrix);
+            //PrintMatrixStatistic(normalMatrix);
             PrintMatrix(normalMatrix);
 
             IMatrix sparseMatrix = new SparseMatrix();
             MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
-            PrintMatrixStatistic(sparseMatrix);
+            //PrintMatrixStatistic(sparseMatrix);
             PrintMatrix(sparseMatrix);
 
             /* Client Code End */
