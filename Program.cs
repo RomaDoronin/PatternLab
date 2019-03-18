@@ -155,7 +155,7 @@ namespace Pattern_lab
         }
 
         public override void VisualizationMatrix(IVisualizator _visualizator)
-        {			
+        {
             Console.WriteLine("Visualization Normal Matrix");
             _visualizator.DrawBorder(this);
             for (int i = 0; i < GetRowSize(); i++)
@@ -185,8 +185,8 @@ namespace Pattern_lab
                 {
                     if (GetVal(i,j) != 0)
                         _visualizator.DrawCellVal(this, i, j);
-					else
-						_visualizator.DrawCellVal(this, -1, j);
+                    else
+                        _visualizator.DrawCellVal(this, -1, j);
                 }
         }
     }
@@ -313,16 +313,16 @@ namespace Pattern_lab
 
         public void DrawCellVal(IMatrix matrix, int i, int j)
         {
-			if (j == 0)
-				Console.Write(border + "	");
-			
-			if (i == -1)
-				Console.Write("_	");
-			else
-				Console.Write(matrix.GetVal(i,j) + "	");
-			
-			if (j == (matrix.GetColumnSize() - 1))
-				Console.WriteLine(border);
+            if (j == 0)
+                Console.Write(border + "	");
+
+            if (i == -1)
+                Console.Write("_	");
+            else
+                Console.Write(matrix.GetVal(i,j) + "	");
+
+            if (j == (matrix.GetColumnSize() - 1))
+                Console.WriteLine(border);
         }
     }
 
@@ -338,33 +338,33 @@ namespace Pattern_lab
             Console.WriteLine("GraphicsContextVisualizator: Draw Cell Val i:" + i + ", j:" + j);
         }
     }
-	
+
     class XSMLVisualizator : IVisualizator
     {
-		char border = ' ';
-		
+        char border = ' ';
+
         public void DrawBorder(IMatrix matrix)
         {
-			border = '|';
-			File.WriteAllText("visual.txt", "");
+            border = '|';
+            File.WriteAllText("visual.txt", "");
         }
 
         public void DrawCellVal(IMatrix matrix, int i, int j)
         {
-			string str = "";
-			
-			if (j == 0)
-				str += border.ToString() + "	";
-			
-			if (i == -1)
-				str += "_	";
-			else
-				str += matrix.GetVal(i,j).ToString() + "	";
-			
-			if (j == (matrix.GetColumnSize() - 1))
-				str += border.ToString() + "\n";
-			
-			File.AppendAllText("visual.txt", str);
+            string str = "";
+
+            if (j == 0)
+                str += border.ToString() + "	";
+
+            if (i == -1)
+                str += "_	";
+            else
+                str += matrix.GetVal(i,j).ToString() + "	";
+
+            if (j == (matrix.GetColumnSize() - 1))
+                str += border.ToString() + "\n";
+
+            File.AppendAllText("visual.txt", str);
         }
     }
 
@@ -396,7 +396,7 @@ namespace Pattern_lab
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Client start working...");
+            Console.WriteLine("Client start working... \n");
 
             /* Client Code Start */
 
@@ -409,6 +409,11 @@ namespace Pattern_lab
             MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
             //PrintMatrixStatistic(sparseMatrix);
             PrintMatrix(sparseMatrix);
+
+            // LAB 3
+            RenumberDecorator tempMat = new RenumberDecorator(normalMatrix);
+            // Как создать IMatrix с новыми методами?
+            tempMat.RenumberRow(0, 2);
 
             /* Client Code End */
         }

@@ -12,5 +12,8 @@
 *.app
 *.exe
 
+# Windows
+*.sh
+*.bat
 # Temporary file
 visual.txt
