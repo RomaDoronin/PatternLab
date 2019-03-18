@@ -155,7 +155,7 @@ namespace Pattern_lab
 
         public override void VisualizationMatrix()
         {
-            Console.WriteLine("Visualization Normal Matrix with 0");
+            Console.WriteLine("Visualization Normal Matrix");
             DrawBorder();
             DrawCellVal();
         }
@@ -170,7 +170,7 @@ namespace Pattern_lab
 
         public override void VisualizationMatrix()
         {
-            Console.WriteLine("Visualization Sparse Matrix without 0");
+            Console.WriteLine("Visualization Sparse Matrix");
             DrawBorder();
             DrawCellVal();
         }
@@ -343,7 +343,7 @@ namespace Pattern_lab
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Client start working...");
+            Console.WriteLine("Client start working... \n");
 
             /* Client Code Start */
 
@@ -356,6 +356,11 @@ namespace Pattern_lab
             MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
             PrintMatrixStatistic(sparseMatrix);
             PrintMatrix(sparseMatrix);
+
+            // LAB 3
+            RenumberDecorator tempMat = new RenumberDecorator(normalMatrix);
+            // Как создать IMatrix с новыми методами?
+            tempMat.RenumberRow(0, 2);
 
             /* Client Code End */
         }
