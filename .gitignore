@@ -15,5 +15,9 @@
 # Windows
 *.sh
 *.bat
-# Temporary file
+
+# Temporary files
 visual.txt
+
+# Merge files
+*.orig
