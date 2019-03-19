@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pattern_lab.Matrix;
+using Pattern_lab.Visualizator;
 
 namespace Pattern_lab
 {
@@ -65,15 +67,14 @@ namespace Pattern_lab
             return matrix.GetRowSize();
         }
 
-        public void SetVisualizator(IVisualizator _visualizator)
+        /*public void SetVisualizator(IVisualizator _visualizator)
         {
             matrix.SetVisualizator(_visualizator);
-        }
+        }*/
 
-        public void VisualizationMatrix()
+        public void VisualizationMatrix(IVisualizator _visualizator)
         {
-            matrix.VisualizationMatrix();
+            matrix.VisualizationMatrix(_visualizator);
         }
-
     }
 }
