@@ -6,21 +6,20 @@ using System.Threading.Tasks;
 using Pattern_lab.Matrix;
 using Pattern_lab.Visualizator;
 
-namespace Pattern_lab
+namespace Pattern_lab.Decorator
 {
-    class RenumberDecorator : IMatrix
+    class RenumberDecorator : BaseDecorator
     {
-        private IMatrix matrix;
         private Dictionary<int, int> renumColumnIndex;
         private Dictionary<int, int> renumRowIndex;
 
-        public RenumberDecorator(IMatrix _matrix)
+        public RenumberDecorator(IMatrix matrix) : base(matrix)
         {
-            matrix = _matrix;
             renumColumnIndex = new Dictionary<int, int>();
             renumRowIndex = new Dictionary<int, int>();
         }
 
+        // Дополнительная функциональность
         public void RenumberRow(int rowIndex1, int rowIndex2)
         {
             renumRowIndex[rowIndex1] = rowIndex2;
@@ -43,38 +42,30 @@ namespace Pattern_lab
         }
 
         // Декорированные методы
-        public void SetVal(int indexI, int indexJ, int val)
+        public override void SetVal(int indexI, int indexJ, int val)
         {
             CheckRowColumnNum(ref indexI, ref indexJ);
-
-            matrix.SetVal(indexI, indexJ, val);
+            _matrix.SetVal(indexI, indexJ, val); 
         }
 
-        public int GetVal(int indexI, int indexJ)
+        public override int GetVal(int indexI, int indexJ)
         {
             CheckRowColumnNum(ref indexI, ref indexJ);
-
-            return matrix.GetVal(indexI, indexJ);
+            return _matrix.GetVal(indexI, indexJ);
         }
 
-        public int GetColumnSize()
+        // TODO: Наверное можно как-то правильно сделать вывод. Сейчас если делать правильно, то программа использует не наши методы. Скорей всего проблема в несовместимости МОСТА и ДЕКОРАТОРА
+        public override void VisualizationMatrix(IVisualizator _visualizator)
         {
-            return matrix.GetColumnSize();
-        }
-
-        public int GetRowSize()
-        {
-            return matrix.GetRowSize();
-        }
-
-        /*public void SetVisualizator(IVisualizator _visualizator)
-        {
-            matrix.SetVisualizator(_visualizator);
-        }*/
-
-        public void VisualizationMatrix(IVisualizator _visualizator)
-        {
-            matrix.VisualizationMatrix(_visualizator);
+            Console.WriteLine("Visualization Renumber Matrix");
+            _visualizator.DrawBorder(this);
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    _visualizator.DrawCellVal(this, i, j);
+                }
+            }
         }
     }
 }

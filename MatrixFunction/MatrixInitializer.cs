@@ -14,7 +14,7 @@ namespace Pattern_lab.MatrixFunction
             Random rand = new Random(DateTime.Now.Millisecond);
 
             /* Set matrix size for rand value */
-            matrix.SetVal(rand.Next(2, 5), rand.Next(2, 5), 0);
+            matrix.SetVal(/*rand.Next(2, 5), rand.Next(2, 5),*/ 2, 2, 0);
 
             int numOfNumbers = matrix.GetRowSize() * matrix.GetColumnSize();
 

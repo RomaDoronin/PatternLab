@@ -26,7 +26,6 @@ namespace Pattern_lab.Matrix
                     _visualizator.DrawCellVal(this, i, j);
                 }
             }
-
         }
     }
 }

@@ -7,6 +7,7 @@ using System.IO;
 using Pattern_lab.Matrix;
 using Pattern_lab.MatrixFunction;
 using Pattern_lab.Visualizator;
+using Pattern_lab.Decorator;
 
 namespace Pattern_lab
 {
@@ -24,13 +25,44 @@ namespace Pattern_lab
             Console.WriteLine("Number of not null elements : " + matrixStatistic.GetNotNullValuesNumber() + "\n");
         }
 
+        // ----------------------------------------------------------------------- LAB 2
         private static void PrintMatrix(IMatrix matrix)
         {
-            //matrix.SetVisualizator(new XSMLVisualizator());
+            /* matrix.SetVisualizator(new XSMLVisualizator()); */
             matrix.VisualizationMatrix(new ConsoleVisualizator());
-            matrix.VisualizationMatrix(new XSMLVisualizator());
+            //matrix.VisualizationMatrix(new XSMLVisualizator());
 
             Console.WriteLine();
+        }
+
+        // ----------------------------------------------------------------------- LAB 3
+        private static void Renumber(ref IMatrix matrix)
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+
+            RenumberDecorator decoratorMatrix = new RenumberDecorator(matrix);
+
+            decoratorMatrix.RenumberRow(rand.Next(matrix.GetRowSize()), rand.Next(matrix.GetRowSize()));
+            decoratorMatrix.RenumberColumn(rand.Next(matrix.GetColumnSize()), rand.Next(matrix.GetColumnSize()));
+            
+            matrix = decoratorMatrix;
+        }
+
+        // TODO: Убрать костыль
+        private static void Recover(ref IMatrix matrix)
+        {
+            try
+            {
+                while (true)
+                {
+                    RenumberDecorator decoratorMatrix = (RenumberDecorator)matrix;
+                    matrix = decoratorMatrix.GetBase();
+                }
+            }
+            catch (InvalidCastException e)
+            {
+                Console.WriteLine("Recover is ready");
+            }
         }
 
         /* Configurator Code End */
@@ -43,18 +75,24 @@ namespace Pattern_lab
 
             IMatrix normalMatrix = new NormalMatrix();
             MatrixInitializer.InitMatrix(normalMatrix, 7, 10);
-            PrintMatrixStatistic(normalMatrix);
+            /* PrintMatrixStatistic(normalMatrix); */
             PrintMatrix(normalMatrix);
 
-            IMatrix sparseMatrix = new SparseMatrix();
+            /* IMatrix sparseMatrix = new SparseMatrix();
             MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
-            PrintMatrixStatistic(sparseMatrix);
-            PrintMatrix(sparseMatrix);
+            PrintMatrixStatistic(sparseMatrix); 
+            PrintMatrix(sparseMatrix); */
 
-            // LAB 3
-            //RenumberDecorator tempMat = new RenumberDecorator(normalMatrix);
-            // Как создать IMatrix с новыми методами?
-            //tempMat.RenumberRow(0, 2);
+
+            // ------------------------------------------------------------------- LAB 3
+            Renumber(ref normalMatrix);
+            PrintMatrix(normalMatrix);
+
+            Renumber(ref normalMatrix);
+            PrintMatrix(normalMatrix);
+
+            Recover(ref normalMatrix);
+            PrintMatrix(normalMatrix);
 
             /* Client Code End */
         }
