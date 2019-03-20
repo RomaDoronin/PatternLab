@@ -91,6 +91,9 @@ namespace Pattern_lab
             Renumber(ref normalMatrix);
             PrintMatrix(normalMatrix);
 
+            Renumber(ref normalMatrix);
+            PrintMatrix(normalMatrix);
+
             Recover(ref normalMatrix);
             PrintMatrix(normalMatrix);
 
