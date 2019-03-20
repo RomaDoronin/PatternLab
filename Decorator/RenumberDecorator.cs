@@ -8,13 +8,15 @@ using Pattern_lab.Visualizator;
 
 namespace Pattern_lab.Decorator
 {
-    class RenumberDecorator : BaseDecorator
+    class RenumberDecorator : IMatrix
     {
+        private IMatrix _matrix;
         private Dictionary<int, int> renumColumnIndex;
         private Dictionary<int, int> renumRowIndex;
 
-        public RenumberDecorator(IMatrix matrix) : base(matrix)
+        public RenumberDecorator(IMatrix matrix)
         {
+            _matrix = matrix;
             renumColumnIndex = new Dictionary<int, int>();
             renumRowIndex = new Dictionary<int, int>();
         }
@@ -41,21 +43,41 @@ namespace Pattern_lab.Decorator
                 indexJ = renumColumnIndex[indexJ];
         }
 
+        public void SetMatrix(IMatrix matrix)
+        {
+            _matrix = matrix;
+        }
+
+        public IMatrix GetBase()
+        {
+            return _matrix;
+        }
+
         // Декорированные методы
-        public override void SetVal(int indexI, int indexJ, int val)
+        public virtual int GetColumnSize()
+        {
+            return _matrix.GetColumnSize();
+        }
+
+        public virtual int GetRowSize()
+        {
+            return _matrix.GetRowSize();
+        }
+
+        public void SetVal(int indexI, int indexJ, int val)
         {
             CheckRowColumnNum(ref indexI, ref indexJ);
             _matrix.SetVal(indexI, indexJ, val); 
         }
 
-        public override int GetVal(int indexI, int indexJ)
+        public int GetVal(int indexI, int indexJ)
         {
             CheckRowColumnNum(ref indexI, ref indexJ);
             return _matrix.GetVal(indexI, indexJ);
         }
 
         // TODO: Наверное можно как-то правильно сделать вывод. Сейчас если делать правильно, то программа использует не наши методы. Скорей всего проблема в несовместимости МОСТА и ДЕКОРАТОРА
-        public override void VisualizationMatrix(IVisualizator _visualizator)
+        public void VisualizationMatrix(IVisualizator _visualizator)
         {
             Console.WriteLine("Visualization Renumber Matrix");
             _visualizator.DrawBorder(this);

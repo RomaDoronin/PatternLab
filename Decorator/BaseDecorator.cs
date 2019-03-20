@@ -8,6 +8,8 @@ using Pattern_lab.Visualizator;
 
 namespace Pattern_lab.Decorator
 {
+    /* TODO: Почему нельзя делать абстрактный декоратор? Например каждому декоратору понадобится метод GetBase для снятия обязательства  
+             и прописывать его в каждом случае - копирование кода получается.                                                           */
     abstract class BaseDecorator : IMatrix
     {
         protected IMatrix _matrix;
