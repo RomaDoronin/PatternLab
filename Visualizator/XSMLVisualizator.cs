@@ -28,7 +28,7 @@ namespace PatternLab.Visualizator
             if (i == -1)
                 str += "_	";
             else
-                str += matrix.GetVal(i, j).ToString() + "	";
+                str += matrix.GetValToStr(i, j) + "	";
 
             if (j == (matrix.GetColumnSize() - 1))
                 str += border.ToString() + "\n";

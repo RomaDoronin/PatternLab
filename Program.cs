@@ -63,24 +63,14 @@ namespace PatternLab
             }
         }
 
-        private static void GroupMatrix(ref IMatrix matrix)
+        private static void GroupMatrix(ref IMatrix matrix, List<IMatrix> matrixList)
         {
             HorizontalMatrixGroup groupMatrix = new HorizontalMatrixGroup();
-
-            IMatrix matrix1 = new NormalMatrix();
-            MatrixInitializer.InitMatrix(matrix1, 7, 10, 2, 2, LAB_MODE.LAB4, 1);
-            IMatrix matrix2 = new NormalMatrix();
-            MatrixInitializer.InitMatrix(matrix2, 7, 10, 3, 3, LAB_MODE.LAB4, 2);
-            IMatrix matrix3 = new NormalMatrix();
-            MatrixInitializer.InitMatrix(matrix3, 7, 10, 5, 1, LAB_MODE.LAB4, 3);
-            IMatrix matrix4 = new NormalMatrix();
-            MatrixInitializer.InitMatrix(matrix4, 7, 10, 1, 1, LAB_MODE.LAB4, 4);
-
-            groupMatrix.AddMatrix(matrix1);
-            groupMatrix.AddMatrix(matrix2);
-            groupMatrix.AddMatrix(matrix3);
-            groupMatrix.AddMatrix(matrix4);
-            PrintMatrix(groupMatrix);
+            
+            foreach (var iterMatrix in matrixList)
+            {
+                groupMatrix.AddMatrix(iterMatrix);
+            }
 
             matrix = groupMatrix;
         }
@@ -117,13 +107,64 @@ namespace PatternLab
 
             // ------------------------------------------------------------------- LAB 4
 
-            IMatrix groupMatrix = new HorizontalMatrixGroup();
-            GroupMatrix(ref groupMatrix);
+            /*IMatrix groupMatrix = new HorizontalMatrixGroup();
 
-            groupMatrix = new TransposingDecorator(groupMatrix);
+            IMatrix matrix1 = new SparseMatrix();
+            MatrixInitializer.InitMatrix(matrix1, 2, 10, 2, 2);
+            IMatrix matrix2 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix2, 4, 10, 3, 3);
+            IMatrix matrix3 = new SparseMatrix();
+            MatrixInitializer.InitMatrix(matrix3, 2, 10, 5, 1);
+            IMatrix matrix4 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix4, 1, 10, 1, 1);
+            List<IMatrix> matrixList = new List<IMatrix>() {
+                matrix1, matrix2, matrix3, matrix4
+            };
+            GroupMatrix(ref groupMatrix, matrixList);
             PrintMatrix(groupMatrix);
 
-            // TODO: Доработать клиенскую часть
+            groupMatrix = new TransposingDecorator(groupMatrix);
+            PrintMatrix(groupMatrix);*/
+
+            // Клиенская часть LAB 4
+            IMatrix groupMatrix1 = new HorizontalMatrixGroup();
+            IMatrix matrix1 = new SparseMatrix();
+            MatrixInitializer.InitMatrix(matrix1, 7, 10, 2, 2, LAB_MODE.LAB4, 1);
+            IMatrix matrix2 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix2, 7, 10, 4, 3, LAB_MODE.LAB4, 2);
+            IMatrix matrix3 = new SparseMatrix();
+            MatrixInitializer.InitMatrix(matrix3, 7, 10, 1, 3, LAB_MODE.LAB4, 3);
+            List<IMatrix> matrixList1 = new List<IMatrix>() { matrix1, matrix2, matrix3 };
+            GroupMatrix(ref groupMatrix1, matrixList1);
+            groupMatrix1 = new TransposingDecorator(groupMatrix1);
+
+            PrintMatrix(groupMatrix1);
+
+            IMatrix groupMatrix2 = new HorizontalMatrixGroup();
+            IMatrix matrix4 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix4, 7, 10, 2, 4, LAB_MODE.LAB4, 4);
+            IMatrix matrix5 = new SparseMatrix();
+            MatrixInitializer.InitMatrix(matrix5, 7, 10, 2, 3, LAB_MODE.LAB4, 5);
+            List<IMatrix> matrixList2 = new List<IMatrix>() { matrix4, matrix5 };
+            GroupMatrix(ref groupMatrix2, matrixList2);
+            groupMatrix2 = new TransposingDecorator(groupMatrix2);
+
+            PrintMatrix(groupMatrix2);
+
+            IMatrix groupMatrix3 = new HorizontalMatrixGroup();
+            IMatrix matrix6 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix6, 7, 10, 1, 1, LAB_MODE.LAB4, 6);
+            List<IMatrix> matrixList3 = new List<IMatrix>() { matrix6 };
+            GroupMatrix(ref groupMatrix3, matrixList3);
+
+            PrintMatrix(groupMatrix3);
+
+            IMatrix groupsMatrix = new HorizontalMatrixGroup();
+            List<IMatrix> groupList = new List<IMatrix>() { groupMatrix1, groupMatrix2, groupMatrix3 };
+            GroupMatrix(ref groupsMatrix, groupList);
+            groupsMatrix = new TransposingDecorator(groupsMatrix);
+
+            PrintMatrix(groupsMatrix);
 
             /* Client Code End */
         }

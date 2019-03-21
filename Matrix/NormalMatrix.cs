@@ -16,15 +16,9 @@ namespace PatternLab.Matrix
         }
 
         // LAB 3
-        public override void EnumerationElements(IMatrix matrix, SomeFunction func)
+        public override string GetValToStr(int indexI, int indexJ)
         {
-            for (int i = 0; i < matrix.GetRowSize(); i++)
-            {
-                for (int j = 0; j < matrix.GetColumnSize(); j++)
-                {
-                    func(matrix, i, j);
-                }
-            }
+            return GetVal(indexI, indexJ).ToString();
         }
     }
 }

@@ -54,5 +54,10 @@ namespace PatternLab.Decorator
             _visualizator.DrawBorder(this);
             EnumerationElements(this, _visualizator.DrawCellVal);
         }
+
+        public string GetValToStr(int indexI, int indexJ)
+        {
+            return _matrix.GetValToStr(indexJ, indexI);
+        }
     }
 }

@@ -22,10 +22,6 @@ namespace PatternLab.Composite
         public void EnumerationElements(IMatrix matrix, SomeFunction func)
         {
             matrixList[0].EnumerationElements(matrix, func);
-            //foreach (var interMatrix in matrixList)
-            //{
-            //    interMatrix.EnumerationElements(matrix, func);
-            //}
         }
 
         public int GetColumnSize()
@@ -65,7 +61,7 @@ namespace PatternLab.Composite
                     {
                         return matrix.GetVal(indexI, indexJ);
                     }
-                    else if (indexJ < GetRowSize())
+                    else if (indexI < GetRowSize())
                     {
                         return 0;
                     }
@@ -102,23 +98,41 @@ namespace PatternLab.Composite
 
             throw new IndexOutOfRangeException();
         }
-
-        // TODO: Чтобы сделать красивый вывод необходимо сделать метод: вывод отдельной строки
+        
         public void VisualizationMatrix(IVisualizator _visualizator)
         {
             Console.WriteLine("Horizontal Matrix Group");
             _visualizator.DrawBorder(this);
             EnumerationElements(this, _visualizator.DrawCellVal);
-
-            //foreach (var matrix in matrixList)
-            //{
-            //    matrix.VisualizationMatrix(_visualizator);
-            //}
         }
 
         public bool IsComposite()
         {
             return true;
+        }
+
+        public string GetValToStr(int indexI, int indexJ)
+        {
+            foreach (var matrix in matrixList)
+            {
+                if (matrix.GetColumnSize() > indexJ)
+                {
+                    if (indexI < matrix.GetRowSize())
+                    {
+                        return matrix.GetValToStr(indexI, indexJ);
+                    }
+                    else if (indexI < GetRowSize())
+                    {
+                        return " ";
+                    }
+                }
+                else
+                {
+                    indexJ -= matrix.GetColumnSize();
+                }
+            }
+
+            throw new IndexOutOfRangeException();
         }
     }
 }

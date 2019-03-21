@@ -22,10 +22,7 @@ namespace PatternLab.Visualizator
             if (j == 0)
                 Console.Write(border + "	");
 
-            if (i == -1)
-                Console.Write("_	");
-            else
-                Console.Write(matrix.GetVal(i, j) + "	");
+            Console.Write(matrix.GetValToStr(i, j) + "	");
 
             if (j == (matrix.GetColumnSize() - 1))
                 Console.WriteLine(border);

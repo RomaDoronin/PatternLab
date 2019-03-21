@@ -28,5 +28,6 @@ namespace PatternLab.Matrix
 
         // LAB 4
         bool IsComposite();
+        string GetValToStr(int indexI, int indexJ);
     }
 }

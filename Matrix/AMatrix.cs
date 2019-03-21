@@ -54,11 +54,23 @@ namespace PatternLab.Matrix
         }
 
         // LAB 3
-        public abstract void EnumerationElements(IMatrix matrix, SomeFunction func);
+        public void EnumerationElements(IMatrix matrix, SomeFunction func)
+        {
+            for (int i = 0; i < matrix.GetRowSize(); i++)
+            {
+                for (int j = 0; j < matrix.GetColumnSize(); j++)
+                {
+                    func(matrix, i, j);
+                }
+            }
+        }
 
         public bool IsComposite()
         {
             return false;
         }
+
+        // LAB 4
+        public abstract string GetValToStr(int indexI, int indexJ);
     }
 }

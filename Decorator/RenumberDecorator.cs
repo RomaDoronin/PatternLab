@@ -92,5 +92,10 @@ namespace PatternLab.Decorator
         {
             return false;
         }
+
+        public string GetValToStr(int indexI, int indexJ)
+        {
+            return GetVal(indexI, indexJ).ToString();
+        }
     }
 }
