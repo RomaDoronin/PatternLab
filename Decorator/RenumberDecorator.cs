@@ -81,13 +81,6 @@ namespace Pattern_lab.Decorator
             Console.WriteLine("Visualization Renumber Matrix");
             _visualizator.DrawBorder(this);
             EnumerationElements(this, _visualizator.DrawCellVal);
-            //for (int i = 0; i < GetRowSize(); i++)
-            //{
-            //    for (int j = 0; j < GetColumnSize(); j++)
-            //    {
-            //        _visualizator.DrawCellVal(this, i, j);
-            //    }
-            //}
         }
 
         public void EnumerationElements(IMatrix matrix, SomeFunction func)
