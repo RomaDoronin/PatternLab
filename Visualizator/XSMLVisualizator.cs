@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Matrix;
+using PatternLab.Matrix;
 using System.IO;
 
-namespace Pattern_lab.Visualizator
+namespace PatternLab.Visualizator
 {
     class XSMLVisualizator : IVisualizator
     {

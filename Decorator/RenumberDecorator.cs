@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Matrix;
-using Pattern_lab.Visualizator;
+using PatternLab.Matrix;
+using PatternLab.Visualizator;
 
-namespace Pattern_lab.Decorator
+namespace PatternLab.Decorator
 {
     class RenumberDecorator : IMatrix
     {
@@ -86,6 +86,11 @@ namespace Pattern_lab.Decorator
         public void EnumerationElements(IMatrix matrix, SomeFunction func)
         {
             _matrix.EnumerationElements(matrix, func);
+        }
+
+        public bool IsComposite()
+        {
+            return false;
         }
     }
 }

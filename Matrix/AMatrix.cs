@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Vectror;
-using Pattern_lab.Visualizator;
+using PatternLab.Vectror;
+using PatternLab.Visualizator;
 
-namespace Pattern_lab.Matrix
+namespace PatternLab.Matrix
 {
     abstract class AMatrix : IMatrix
     {
@@ -26,7 +26,7 @@ namespace Pattern_lab.Matrix
         public void SetVal(int indexI, int indexJ, int val)
         {
             rowSize = Math.Max(indexI + 1, rowSize);
-            columnSize = Math.Max(indexI + 1, columnSize);
+            columnSize = Math.Max(indexJ + 1, columnSize);
 
             valMatrix.SetVal(indexI * GetColumnSize() + indexJ, val);
         }
@@ -55,5 +55,10 @@ namespace Pattern_lab.Matrix
 
         // LAB 3
         public abstract void EnumerationElements(IMatrix matrix, SomeFunction func);
+
+        public bool IsComposite()
+        {
+            return false;
+        }
     }
 }

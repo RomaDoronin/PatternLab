@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Matrix;
+using PatternLab.Matrix;
 
-namespace Pattern_lab.Visualizator
+namespace PatternLab.Visualizator
 {
     class ConsoleVisualizator : IVisualizator
     {

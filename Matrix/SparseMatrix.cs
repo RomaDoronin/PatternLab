@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Vectror;
-using Pattern_lab.Visualizator;
+using PatternLab.Vectror;
+using PatternLab.Visualizator;
 
-namespace Pattern_lab.Matrix
+namespace PatternLab.Matrix
 {
     class SparseMatrix : AMatrix
     {

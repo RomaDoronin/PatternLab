@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Vectror;
-using Pattern_lab.Visualizator;
+using PatternLab.Vectror;
+using PatternLab.Visualizator;
 
-namespace Pattern_lab.Matrix
+namespace PatternLab.Matrix
 {
     class NormalMatrix : AMatrix
     {
@@ -18,9 +18,9 @@ namespace Pattern_lab.Matrix
         // LAB 3
         public override void EnumerationElements(IMatrix matrix, SomeFunction func)
         {
-            for (int i = 0; i < GetRowSize(); i++)
+            for (int i = 0; i < matrix.GetRowSize(); i++)
             {
-                for (int j = 0; j < GetColumnSize(); j++)
+                for (int j = 0; j < matrix.GetColumnSize(); j++)
                 {
                     func(matrix, i, j);
                 }

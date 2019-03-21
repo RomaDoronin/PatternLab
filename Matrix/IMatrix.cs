@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Pattern_lab.Visualizator;
+using PatternLab.Visualizator;
 
-namespace Pattern_lab.Matrix
+namespace PatternLab.Matrix
 {
     delegate void SomeFunction(IMatrix matrix, int i, int j);
 
@@ -25,5 +25,8 @@ namespace Pattern_lab.Matrix
         // LAB 3
         // Перебор элементов
         void EnumerationElements(IMatrix matrix, SomeFunction func);
+
+        // LAB 4
+        bool IsComposite();
     }
 }

@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Pattern_lab.Matrix;
-using Pattern_lab.MatrixFunction;
-using Pattern_lab.Visualizator;
-using Pattern_lab.Decorator;
+using PatternLab.Matrix;
+using PatternLab.MatrixFunction;
+using PatternLab.Visualizator;
+using PatternLab.Decorator;
+using PatternLab.Composite;
 
-namespace Pattern_lab
+namespace PatternLab
 {
     class Program
     {
@@ -62,6 +63,28 @@ namespace Pattern_lab
             }
         }
 
+        private static void GroupMatrix(ref IMatrix matrix)
+        {
+            HorizontalMatrixGroup groupMatrix = new HorizontalMatrixGroup();
+
+            IMatrix matrix1 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix1, 7, 10, 2, 2, LAB_MODE.LAB4, 1);
+            IMatrix matrix2 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix2, 7, 10, 3, 3, LAB_MODE.LAB4, 2);
+            IMatrix matrix3 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix3, 7, 10, 5, 1, LAB_MODE.LAB4, 3);
+            IMatrix matrix4 = new NormalMatrix();
+            MatrixInitializer.InitMatrix(matrix4, 7, 10, 1, 1, LAB_MODE.LAB4, 4);
+
+            groupMatrix.AddMatrix(matrix1);
+            groupMatrix.AddMatrix(matrix2);
+            groupMatrix.AddMatrix(matrix3);
+            groupMatrix.AddMatrix(matrix4);
+            PrintMatrix(groupMatrix);
+
+            matrix = groupMatrix;
+        }
+
         /* Configurator Code End */
 
         static void Main(string[] args)
@@ -71,22 +94,36 @@ namespace Pattern_lab
             /* Client Code Start */
 
             //IMatrix matrix = new NormalMatrix();
-            IMatrix matrix = new SparseMatrix();
+            //IMatrix matrix = new SparseMatrix();
 
-            MatrixInitializer.InitMatrix(matrix, 7, 10, 4);
-            PrintMatrixStatistic(matrix);
-            PrintMatrix(matrix);
+            //MatrixInitializer.InitMatrix(matrix, 7, 10, 4, 4/*, LAB_MODE.LAB4, 1*/);
+            //PrintMatrixStatistic(matrix);
+            //PrintMatrix(matrix);
+
+            // Транспонирование ТЕСТ
+            /*matrix = new TransposingDecorator(matrix);
+            PrintMatrix(matrix);*/
 
 
             // ------------------------------------------------------------------- LAB 3
-            Renumber(ref matrix);
+            /*Renumber(ref matrix);
             PrintMatrix(matrix);
 
             Renumber(ref matrix);
             PrintMatrix(matrix);
 
             Recover(ref matrix);
-            PrintMatrix(matrix);
+            PrintMatrix(matrix);*/
+
+            // ------------------------------------------------------------------- LAB 4
+
+            IMatrix groupMatrix = new HorizontalMatrixGroup();
+            GroupMatrix(ref groupMatrix);
+
+            groupMatrix = new TransposingDecorator(groupMatrix);
+            PrintMatrix(groupMatrix);
+
+            // TODO: Доработать клиенскую часть
 
             /* Client Code End */
         }
