@@ -7,6 +7,8 @@ using Pattern_lab.Visualizator;
 
 namespace Pattern_lab.Matrix
 {
+    delegate void SomeFunction(IMatrix matrix, int i, int j);
+
     interface IMatrix
     {
         void SetVal(int indexI, int indexJ, int val);
@@ -19,5 +21,9 @@ namespace Pattern_lab.Matrix
         /* void SetVisualizator(IVisualizator _visualizator); */
         // Слабый мост
         void VisualizationMatrix(IVisualizator _visualizator);
+
+        // LAB 3
+        // Перебор элементов
+        void EnumerationElements(IMatrix matrix, SomeFunction func);
     }
 }

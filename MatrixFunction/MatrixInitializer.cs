@@ -9,12 +9,12 @@ namespace Pattern_lab.MatrixFunction
 {
     class MatrixInitializer
     {
-        public static void InitMatrix(IMatrix matrix, int notNullNumber, int maxNumber)
+        public static void InitMatrix(IMatrix matrix, int notNullNumber, int maxNumber, int size)
         {
             Random rand = new Random(DateTime.Now.Millisecond);
 
             /* Set matrix size for rand value */
-            matrix.SetVal(/*rand.Next(2, 5), rand.Next(2, 5),*/ 2, 2, 0);
+            matrix.SetVal(/*rand.Next(2, 5), rand.Next(2, 5),*/ size - 1, size - 1, 0);
 
             int numOfNumbers = matrix.GetRowSize() * matrix.GetColumnSize();
 

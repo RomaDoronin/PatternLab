@@ -15,15 +15,14 @@ namespace Pattern_lab.Matrix
             return new NormalVector();
         }
 
-        public override void VisualizationMatrix(IVisualizator _visualizator)
+        // LAB 3
+        public override void EnumerationElements(IMatrix matrix, SomeFunction func)
         {
-            Console.WriteLine("Visualization Normal Matrix");
-            _visualizator.DrawBorder(this);
             for (int i = 0; i < GetRowSize(); i++)
             {
                 for (int j = 0; j < GetColumnSize(); j++)
                 {
-                    _visualizator.DrawCellVal(this, i, j);
+                    func(matrix, i, j);
                 }
             }
         }

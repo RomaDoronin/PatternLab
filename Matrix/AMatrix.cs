@@ -47,23 +47,13 @@ namespace Pattern_lab.Matrix
         }
 
         // LAB 2
-        private IVisualizator visualizator;
-
-        /*public void SetVisualizator(IVisualizator _visualizator)
+        public void VisualizationMatrix(IVisualizator _visualizator)
         {
-            visualizator = _visualizator;
-        }*/
-
-        public abstract void VisualizationMatrix(IVisualizator _visualizator);
-
-        /*protected void DrawBorder()
-        {
-            visualizator.DrawBorder(this);
+            _visualizator.DrawBorder(this);
+            EnumerationElements(this, _visualizator.DrawCellVal);
         }
 
-        protected void DrawCellVal(int i, int j)
-        {
-            visualizator.DrawCellVal(this, i, j);
-        }*/
+        // LAB 3
+        public abstract void EnumerationElements(IMatrix matrix, SomeFunction func);
     }
 }

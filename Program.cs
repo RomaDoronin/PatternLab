@@ -28,10 +28,8 @@ namespace Pattern_lab
         // ----------------------------------------------------------------------- LAB 2
         private static void PrintMatrix(IMatrix matrix)
         {
-            /* matrix.SetVisualizator(new XSMLVisualizator()); */
             matrix.VisualizationMatrix(new ConsoleVisualizator());
             //matrix.VisualizationMatrix(new XSMLVisualizator());
-
             Console.WriteLine();
         }
 
@@ -44,11 +42,10 @@ namespace Pattern_lab
 
             decoratorMatrix.RenumberRow(rand.Next(matrix.GetRowSize()), rand.Next(matrix.GetRowSize()));
             decoratorMatrix.RenumberColumn(rand.Next(matrix.GetColumnSize()), rand.Next(matrix.GetColumnSize()));
-            
+
             matrix = decoratorMatrix;
         }
 
-        // TODO: Убрать костыль
         private static void Recover(ref IMatrix matrix)
         {
             try
@@ -73,29 +70,23 @@ namespace Pattern_lab
 
             /* Client Code Start */
 
-            IMatrix normalMatrix = new NormalMatrix();
-            MatrixInitializer.InitMatrix(normalMatrix, 7, 10);
-            /* PrintMatrixStatistic(normalMatrix); */
-            PrintMatrix(normalMatrix);
+            //IMatrix matrix = new NormalMatrix();
+            IMatrix matrix = new SparseMatrix();
 
-            /* IMatrix sparseMatrix = new SparseMatrix();
-            MatrixInitializer.InitMatrix(sparseMatrix, 7, 10);
-            PrintMatrixStatistic(sparseMatrix); 
-            PrintMatrix(sparseMatrix); */
+            MatrixInitializer.InitMatrix(matrix, 7, 10, 4);
+            PrintMatrixStatistic(matrix);
+            PrintMatrix(matrix);
 
 
             // ------------------------------------------------------------------- LAB 3
-            Renumber(ref normalMatrix);
-            PrintMatrix(normalMatrix);
+            Renumber(ref matrix);
+            PrintMatrix(matrix);
 
-            Renumber(ref normalMatrix);
-            PrintMatrix(normalMatrix);
+            Renumber(ref matrix);
+            PrintMatrix(matrix);
 
-            Renumber(ref normalMatrix);
-            PrintMatrix(normalMatrix);
-
-            Recover(ref normalMatrix);
-            PrintMatrix(normalMatrix);
+            Recover(ref matrix);
+            PrintMatrix(matrix);
 
             /* Client Code End */
         }

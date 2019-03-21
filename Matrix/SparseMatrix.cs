@@ -15,18 +15,19 @@ namespace Pattern_lab.Matrix
             return new SparseVector();
         }
 
-        public override void VisualizationMatrix(IVisualizator _visualizator)
+        // LAB 3
+        public override void EnumerationElements(IMatrix matrix, SomeFunction func)
         {
-            Console.WriteLine("Visualization Sparse Matrix");
-            _visualizator.DrawBorder(this);
-            for (int i = 0; i < GetRowSize(); i++)
-                for (int j = 0; j < GetColumnSize(); j++)
+            for (int i = 0; i < matrix.GetRowSize(); i++)
+            {
+                for (int j = 0; j < matrix.GetColumnSize(); j++)
                 {
-                    if (GetVal(i, j) != 0)
-                        _visualizator.DrawCellVal(this, i, j);
+                    if (matrix.GetVal(i, j) != 0)
+                        func(matrix, i, j);
                     else
-                        _visualizator.DrawCellVal(this, -1, j);
+                        func(matrix, -1, j);
                 }
+            }
         }
     }
 }
