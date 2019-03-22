@@ -1,4 +1,11 @@
-﻿using System;
+﻿//#define LAB
+#if (LAB)
+//#define LAB3
+#endif
+//#define LAB4_VAR1
+#define LAB4_VAR2
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -83,31 +90,33 @@ namespace PatternLab
 
             /* Client Code Start */
 
-            //IMatrix matrix = new NormalMatrix();
+#if (LAB)
+            IMatrix matrix = new NormalMatrix();
             //IMatrix matrix = new SparseMatrix();
 
-            //MatrixInitializer.InitMatrix(matrix, 7, 10, 4, 4/*, LAB_MODE.LAB4, 1*/);
-            //PrintMatrixStatistic(matrix);
-            //PrintMatrix(matrix);
+            MatrixInitializer.InitMatrix(matrix, 7, 10, 4, 4/*, LAB_MODE.LAB4, 1*/);
+            PrintMatrixStatistic(matrix);
+            PrintMatrix(matrix);
 
             // Транспонирование ТЕСТ
             /*matrix = new TransposingDecorator(matrix);
             PrintMatrix(matrix);*/
-
-
+#endif
             // ------------------------------------------------------------------- LAB 3
-            /*Renumber(ref matrix);
+#if (LAB3)
+            Renumber(ref matrix);
             PrintMatrix(matrix);
 
             Renumber(ref matrix);
             PrintMatrix(matrix);
 
             Recover(ref matrix);
-            PrintMatrix(matrix);*/
-
+            PrintMatrix(matrix);
+#endif
             // ------------------------------------------------------------------- LAB 4
 
-            /*IMatrix groupMatrix = new HorizontalMatrixGroup();
+#if (LAB4_VAR1)
+            IMatrix groupMatrix = new HorizontalMatrixGroup();
 
             IMatrix matrix1 = new SparseMatrix();
             MatrixInitializer.InitMatrix(matrix1, 2, 10, 2, 2);
@@ -124,8 +133,8 @@ namespace PatternLab
             PrintMatrix(groupMatrix);
 
             groupMatrix = new TransposingDecorator(groupMatrix);
-            PrintMatrix(groupMatrix);*/
-
+            PrintMatrix(groupMatrix);
+#elif (LAB4_VAR2)
             // Клиенская часть LAB 4
             IMatrix groupMatrix1 = new HorizontalMatrixGroup();
             IMatrix matrix1 = new SparseMatrix();
@@ -165,6 +174,7 @@ namespace PatternLab
             groupsMatrix = new TransposingDecorator(groupsMatrix);
 
             PrintMatrix(groupsMatrix);
+#endif
 
             /* Client Code End */
         }
