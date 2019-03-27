@@ -19,10 +19,27 @@ namespace PatternLab.Composite
         }
 
         // Поддержка интерфейса IMatrix
-        public void EnumerationElements(IMatrix matrix, SomeFunction func)
+		//SomeFunction func;
+		
+        public void EnumerationElements(SomeFunction func)
         {
-            matrixList[0].EnumerationElements(matrix, func);
+			//this.func = func;
+			/*foreach (var matrix in matrixList)
+                matrix.EnumerationElements(funcDecor);*/
+			
+			for (int i = 0; i < GetRowSize(); i++)
+			{
+				for (int j = 0; j < GetColumnSize(); j++)
+				{
+					func(this, i, j);
+				}
+			}
         }
+
+        /*void funcDecor(IMatrix matrix, int i, int j)
+        {
+            func(matrix, i, j); 
+        }*/
 
         public int GetColumnSize()
         {
@@ -103,7 +120,7 @@ namespace PatternLab.Composite
         {
             Console.WriteLine("Horizontal Matrix Group");
             _visualizator.DrawBorder(this);
-            EnumerationElements(this, _visualizator.DrawCellVal);
+            EnumerationElements(_visualizator.DrawCellVal);
         }
 
         public bool IsComposite()

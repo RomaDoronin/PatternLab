@@ -20,5 +20,16 @@ namespace PatternLab.Matrix
         {
             return GetVal(indexI, indexJ).ToString();
         }
+
+        public override void EnumerationElements(SomeFunction func)
+        {
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    func(this, i, j);
+                }
+            }
+        }
     }
 }

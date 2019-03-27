@@ -50,20 +50,11 @@ namespace PatternLab.Matrix
         public void VisualizationMatrix(IVisualizator _visualizator)
         {
             _visualizator.DrawBorder(this);
-            EnumerationElements(this, _visualizator.DrawCellVal);
+            EnumerationElements(_visualizator.DrawCellVal);
         }
 
         // LAB 3
-        public void EnumerationElements(IMatrix matrix, SomeFunction func)
-        {
-            for (int i = 0; i < matrix.GetRowSize(); i++)
-            {
-                for (int j = 0; j < matrix.GetColumnSize(); j++)
-                {
-                    func(matrix, i, j);
-                }
-            }
-        }
+        public abstract void EnumerationElements(SomeFunction func);
 
         public bool IsComposite()
         {

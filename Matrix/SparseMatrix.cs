@@ -24,5 +24,17 @@ namespace PatternLab.Matrix
             else
                 return "_";
         }
+
+        public override void EnumerationElements(SomeFunction func)
+        {
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    //if (GetVal(i,j) != 0)
+                        func(this, i, j);
+                }
+            }
+        }
     }
 }

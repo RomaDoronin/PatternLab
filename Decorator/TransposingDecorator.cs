@@ -18,10 +18,26 @@ namespace PatternLab.Decorator
         }
 
         // Поддержка интерфейса IMatrix
-        public void EnumerationElements(IMatrix matrix, SomeFunction func)
+        SomeFunction func;
+
+        public void EnumerationElements(SomeFunction func)
         {
-            _matrix.EnumerationElements(matrix, func);
+            //this.func = func;
+            //_matrix.EnumerationElements(funcDecor);
+            
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    func(this, i, j);
+                }
+            }
         }
+
+        /*void funcDecor(IMatrix matrix, int i, int j)
+        {
+            func(this, i, j); 
+        }*/
 
         public int GetColumnSize()
         {
@@ -52,7 +68,7 @@ namespace PatternLab.Decorator
         {
             Console.WriteLine("Visualization Transposing Matrix");
             _visualizator.DrawBorder(this);
-            EnumerationElements(this, _visualizator.DrawCellVal);
+            EnumerationElements(_visualizator.DrawCellVal);
         }
 
         public string GetValToStr(int indexI, int indexJ)

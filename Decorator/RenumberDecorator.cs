@@ -80,12 +80,15 @@ namespace PatternLab.Decorator
         {
             Console.WriteLine("Visualization Renumber Matrix");
             _visualizator.DrawBorder(this);
-            EnumerationElements(this, _visualizator.DrawCellVal);
+            EnumerationElements(_visualizator.DrawCellVal);
         }
+		
+		SomeFunction func;
 
-        public void EnumerationElements(IMatrix matrix, SomeFunction func)
+        public void EnumerationElements(SomeFunction func)
         {
-            _matrix.EnumerationElements(matrix, func);
+			this.func = func;
+            _matrix.EnumerationElements(funcDecor);
         }
 
         public bool IsComposite()
@@ -96,6 +99,12 @@ namespace PatternLab.Decorator
         public string GetValToStr(int indexI, int indexJ)
         {
             return GetVal(indexI, indexJ).ToString();
+        }
+
+        void funcDecor(IMatrix matrix, int i, int j)
+        {
+			CheckRowColumnNum(ref i, ref j);
+            func(matrix, i, j); 
         }
     }
 }

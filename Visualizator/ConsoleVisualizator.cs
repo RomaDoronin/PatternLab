@@ -10,6 +10,7 @@ namespace PatternLab.Visualizator
     class ConsoleVisualizator : IVisualizator
     {
         private char border = ' ';
+		private int count = 0;
 
         public void DrawBorder(IMatrix matrix)
         {
@@ -19,13 +20,15 @@ namespace PatternLab.Visualizator
 
         public void DrawCellVal(IMatrix matrix, int i, int j)
         {
-            if (j == 0)
+            if (count % matrix.GetColumnSize() == 0)
                 Console.Write(border + "	");
 
             Console.Write(matrix.GetValToStr(i, j) + "	");
 
-            if (j == (matrix.GetColumnSize() - 1))
+            if (count % matrix.GetColumnSize() == (matrix.GetColumnSize() - 1))
                 Console.WriteLine(border);
+			
+			count++;
         }
     }
 }

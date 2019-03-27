@@ -1,9 +1,9 @@
 ﻿//#define LAB
 #if (LAB)
-//#define LAB3
+#define LAB3
 #endif
-//#define LAB4_VAR1
-#define LAB4_VAR2
+#define LAB4_VAR1
+//#define LAB4_VAR2
 
 using System;
 using System.Collections.Generic;
@@ -91,16 +91,16 @@ namespace PatternLab
             /* Client Code Start */
 
 #if (LAB)
-            IMatrix matrix = new NormalMatrix();
-            //IMatrix matrix = new SparseMatrix();
+            //IMatrix matrix = new NormalMatrix();
+            IMatrix matrix = new SparseMatrix();
 
             MatrixInitializer.InitMatrix(matrix, 7, 10, 4, 4/*, LAB_MODE.LAB4, 1*/);
             PrintMatrixStatistic(matrix);
             PrintMatrix(matrix);
 
             // Транспонирование ТЕСТ
-            /*matrix = new TransposingDecorator(matrix);
-            PrintMatrix(matrix);*/
+            matrix = new TransposingDecorator(matrix);
+            PrintMatrix(matrix);
 #endif
             // ------------------------------------------------------------------- LAB 3
 #if (LAB3)
@@ -118,13 +118,13 @@ namespace PatternLab
 #if (LAB4_VAR1)
             IMatrix groupMatrix = new HorizontalMatrixGroup();
 
-            IMatrix matrix1 = new SparseMatrix();
+            IMatrix matrix1 = new NormalMatrix();
             MatrixInitializer.InitMatrix(matrix1, 2, 10, 2, 2);
-            IMatrix matrix2 = new NormalMatrix();
+            IMatrix matrix2 = new SparseMatrix();
             MatrixInitializer.InitMatrix(matrix2, 4, 10, 3, 3);
-            IMatrix matrix3 = new SparseMatrix();
+            IMatrix matrix3 = new NormalMatrix();
             MatrixInitializer.InitMatrix(matrix3, 2, 10, 5, 1);
-            IMatrix matrix4 = new NormalMatrix();
+            IMatrix matrix4 = new SparseMatrix();
             MatrixInitializer.InitMatrix(matrix4, 1, 10, 1, 1);
             List<IMatrix> matrixList = new List<IMatrix>() {
                 matrix1, matrix2, matrix3, matrix4
@@ -134,6 +134,7 @@ namespace PatternLab
 
             groupMatrix = new TransposingDecorator(groupMatrix);
             PrintMatrix(groupMatrix);
+
 #elif (LAB4_VAR2)
             // Клиенская часть LAB 4
             IMatrix groupMatrix1 = new HorizontalMatrixGroup();
@@ -143,10 +144,11 @@ namespace PatternLab
             MatrixInitializer.InitMatrix(matrix2, 7, 10, 4, 3, LAB_MODE.LAB4, 2);
             IMatrix matrix3 = new SparseMatrix();
             MatrixInitializer.InitMatrix(matrix3, 7, 10, 1, 3, LAB_MODE.LAB4, 3);
+            
             List<IMatrix> matrixList1 = new List<IMatrix>() { matrix1, matrix2, matrix3 };
             GroupMatrix(ref groupMatrix1, matrixList1);
+            PrintMatrix(groupMatrix1);
             groupMatrix1 = new TransposingDecorator(groupMatrix1);
-
             PrintMatrix(groupMatrix1);
 
             IMatrix groupMatrix2 = new HorizontalMatrixGroup();
@@ -174,6 +176,7 @@ namespace PatternLab
             groupsMatrix = new TransposingDecorator(groupsMatrix);
 
             PrintMatrix(groupsMatrix);
+
 #endif
 
             /* Client Code End */

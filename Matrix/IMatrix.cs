@@ -24,7 +24,7 @@ namespace PatternLab.Matrix
 
         // LAB 3
         // Перебор элементов
-        void EnumerationElements(IMatrix matrix, SomeFunction func);
+        void EnumerationElements(SomeFunction func);
 
         // LAB 4
         bool IsComposite();
