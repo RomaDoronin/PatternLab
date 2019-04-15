@@ -106,5 +106,10 @@ namespace PatternLab.Decorator
 			CheckRowColumnNum(ref i, ref j);
             func(matrix, i, j); 
         }
+
+        public IMatrix CopyMatrix()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

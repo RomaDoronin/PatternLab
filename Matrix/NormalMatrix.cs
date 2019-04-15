@@ -31,5 +31,19 @@ namespace PatternLab.Matrix
                 }
             }
         }
+
+        public override IMatrix CopyMatrix()
+        {
+            NormalMatrix matrix = new NormalMatrix();
+            for (int i = 0; i < GetRowSize(); i++)
+            {
+                for (int j = 0; j < GetColumnSize(); j++)
+                {
+                    matrix.SetVal(i, j, GetVal(i, j));
+                }
+            }
+
+            return matrix;
+        }
     }
 }

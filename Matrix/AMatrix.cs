@@ -63,5 +63,8 @@ namespace PatternLab.Matrix
 
         // LAB 4
         public abstract string GetValToStr(int indexI, int indexJ);
+
+        // LAB 5
+        public abstract IMatrix CopyMatrix();
     }
 }

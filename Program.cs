@@ -2,8 +2,9 @@
 #if (LAB)
 #define LAB3
 #endif
-#define LAB4_VAR1
+//#define LAB4_VAR1
 //#define LAB4_VAR2
+#define LAB5
 
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,14 @@ using PatternLab.MatrixFunction;
 using PatternLab.Visualizator;
 using PatternLab.Decorator;
 using PatternLab.Composite;
+using PatternLab.IncrementalModel;
 
 namespace PatternLab
 {
     class Program
     {
         /* Configurator Code Start */
-
+        
         private static void PrintMatrixStatistic(IMatrix matrix)
         {
             MatrixStatistic matrixStatistic = new MatrixStatistic(matrix);
@@ -80,6 +82,27 @@ namespace PatternLab
             }
 
             matrix = groupMatrix;
+        }
+
+        // ----------------------------------------------------------------------- LAB 5
+        private static void InitializeApplivation(IMatrix matrix)
+        {
+            InitApp command = new InitApp(matrix, 4);
+            command.Execute();
+        }
+
+        private static void ButtonCHANGE(IMatrix matrix, int indexI, int indexJ, int settingVal)
+        {
+            Console.WriteLine("Button CHANGE press");
+            SetValInMatrix command = new SetValInMatrix(matrix, indexI, indexJ, settingVal);
+            command.Execute();
+        }
+
+        private static void ButtonUNDO()
+        {
+            Console.WriteLine("Button UNDO press");
+            CommandManager CM = CommandManager.GetInstance();
+            CM.Undo();
         }
 
         /* Configurator Code End */
@@ -177,6 +200,33 @@ namespace PatternLab
 
             PrintMatrix(groupsMatrix);
 
+#endif
+            // ------------------------------------------------------------------- LAB 5
+
+#if (LAB5)
+            IMatrix matrix = new SparseMatrix();
+            //MatrixInitializer.InitMatrix(matrix, 12, 10, 4, 4);
+
+            InitializeApplivation(matrix);
+            PrintMatrix(matrix);
+
+            ButtonCHANGE(matrix, 2, 1, -7);
+            PrintMatrix(matrix);
+
+            ButtonCHANGE(matrix, 3, 0, -6);
+            PrintMatrix(matrix);
+
+            for (int j = 0; j < matrix.GetColumnSize(); j++)
+            {
+                ButtonCHANGE(matrix, 0, j, 0);
+            }
+            PrintMatrix(matrix);
+
+            for (int i = 0; i < 7; i++)
+            {
+                ButtonUNDO();
+                PrintMatrix(matrix);
+            }
 #endif
 
             /* Client Code End */
