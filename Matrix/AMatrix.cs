@@ -49,8 +49,11 @@ namespace PatternLab.Matrix
         // LAB 2
         public void VisualizationMatrix(IVisualizator _visualizator)
         {
-            _visualizator.DrawBorder(this);
-            EnumerationElements(_visualizator.DrawCellVal);
+            if (columnSize != 0 && rowSize != 0)
+            {
+                _visualizator.DrawBorder(this);
+                EnumerationElements(_visualizator.DrawCellVal);
+            }
         }
 
         // LAB 3
@@ -66,5 +69,12 @@ namespace PatternLab.Matrix
 
         // LAB 5
         public abstract IMatrix CopyMatrix();
+
+        public void ClearMatrix()
+        {
+            valMatrix.ClearVector();
+            columnSize = 0;
+            rowSize = 0;
+        }
     }
 }

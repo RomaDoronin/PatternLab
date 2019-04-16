@@ -12,7 +12,17 @@ namespace PatternLab.Vectror
 
         public void SetVal(int index, int val)
         {
-            valDict[index] = val;
+            if (val != 0)
+            {
+                valDict[index] = val;
+            }
+            else
+            {
+                if (valDict.ContainsKey(index))
+                {
+                    valDict.Remove(index);
+                }
+            }
         }
 
         public int GetVal(int index)
@@ -30,6 +40,11 @@ namespace PatternLab.Vectror
         public int GetSize()
         {
             return valDict.Keys.Max();
+        }
+
+        public void ClearVector()
+        {
+            valDict.Clear();
         }
     }
 }

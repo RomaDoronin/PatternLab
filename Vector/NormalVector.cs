@@ -35,5 +35,10 @@ namespace PatternLab.Vectror
         {
             return valList.Count;
         }
+
+        public void ClearVector()
+        {
+            valList.Clear();
+        }
     }
 }

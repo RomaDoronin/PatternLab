@@ -152,7 +152,7 @@ namespace PatternLab.Composite
             throw new IndexOutOfRangeException();
         }
 
-        public IMatrix CopyMatrix()
+        public void ClearMatrix()
         {
             throw new NotImplementedException();
         }

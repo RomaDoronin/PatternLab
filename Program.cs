@@ -85,9 +85,15 @@ namespace PatternLab
         }
 
         // ----------------------------------------------------------------------- LAB 5
-        private static void InitializeApplivation(IMatrix matrix)
+        private static void InitializeApplivation(ref List<IMatrix> matrixList)
         {
-            InitApp command = new InitApp(matrix, 4);
+            InitApp command = new InitApp(ref matrixList);
+            command.Execute();
+        }
+
+        private static void InitMatrix(IMatrix matrix, int matrixSize)
+        {
+            InitialMatrix command = new InitialMatrix(matrix, matrixSize);
             command.Execute();
         }
 
@@ -204,28 +210,40 @@ namespace PatternLab
             // ------------------------------------------------------------------- LAB 5
 
 #if (LAB5)
-            IMatrix matrix = new SparseMatrix();
-            //MatrixInitializer.InitMatrix(matrix, 12, 10, 4, 4);
+            int commandCount = 0;
+            IMatrix matrix1 = new NormalMatrix();
+            IMatrix matrix2 = new SparseMatrix();
+            List<IMatrix> matrixList = new List<IMatrix> { matrix1, matrix2 };
+            InitializeApplivation(ref matrixList); commandCount++;
 
-            InitializeApplivation(matrix);
-            PrintMatrix(matrix);
+            InitMatrix(matrix1, 4); commandCount++;
+            PrintMatrix(matrix1);
 
-            ButtonCHANGE(matrix, 2, 1, -7);
-            PrintMatrix(matrix);
+            ButtonCHANGE(matrix1, 2, 1, -7); commandCount++;
+            PrintMatrix(matrix1);
 
-            ButtonCHANGE(matrix, 3, 0, -6);
-            PrintMatrix(matrix);
+            ButtonCHANGE(matrix1, 3, 0, -6); commandCount++;
+            PrintMatrix(matrix1);
 
-            for (int j = 0; j < matrix.GetColumnSize(); j++)
+            for (int j = 0; j < matrix1.GetColumnSize(); j++)
             {
-                ButtonCHANGE(matrix, 0, j, 0);
+                ButtonCHANGE(matrix1, 3, j, 0); commandCount++;
             }
-            PrintMatrix(matrix);
+            PrintMatrix(matrix1);
 
-            for (int i = 0; i < 7; i++)
+            //----
+            InitMatrix(matrix2, 3); commandCount++;
+            PrintMatrix(matrix2);
+
+            ButtonCHANGE(matrix2, 2, 1, -10); commandCount++;
+            PrintMatrix(matrix2);
+
+
+            for (int i = 0; i < commandCount; i++)
             {
                 ButtonUNDO();
-                PrintMatrix(matrix);
+                PrintMatrix(matrix1);
+                PrintMatrix(matrix2);
             }
 #endif
 

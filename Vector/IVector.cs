@@ -11,5 +11,6 @@ namespace PatternLab.Vectror
         void SetVal(int index, int val);
         int GetVal(int index);
         int GetSize();
+        void ClearVector();
     }
 }

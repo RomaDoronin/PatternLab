@@ -26,10 +26,5 @@ namespace PatternLab.IncrementalModel
         {
             _matrix.SetVal(_indexI, _indexJ, _settingVal);
         }
-
-        public override ICommand CopyCommand()
-        {
-            return new SetValInMatrix(_matrix.CopyMatrix(), _indexI, _indexJ, _settingVal);
-        }
     }
 }

@@ -9,36 +9,19 @@ namespace PatternLab.IncrementalModel
 {
     class InitApp : ACommand
     {
-        private IMatrix _matrix = null;
-        private int _matrixSize = 0;
+        private List<IMatrix> _matrixList;
 
-        public InitApp(IMatrix matrix, int matrixSize)
+        public InitApp(ref List<IMatrix> matrixList)
         {
-            _matrix = matrix;
-            _matrixSize = matrixSize;
+            _matrixList = matrixList;
         }
 
         protected override void DoExecute()
         {
-            if (_matrix == null || _matrixSize == 0)
+            for (int i = 0; i < _matrixList.Count; i++)
             {
-                throw new NullReferenceException();
+                _matrixList[i].ClearMatrix();
             }
-            else
-            {
-                for (int i = 0; i < _matrixSize; i++)
-                {
-                    for (int j = 0; j < _matrixSize; j++)
-                    {
-                        _matrix.SetVal(i, j, i + j);
-                    }
-                }
-            }
-        }
-
-        public override ICommand CopyCommand()
-        {
-            return new InitApp(_matrix.CopyMatrix(), _matrixSize);
         }
     }
 }

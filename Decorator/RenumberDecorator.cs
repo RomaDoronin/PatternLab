@@ -107,7 +107,7 @@ namespace PatternLab.Decorator
             func(matrix, i, j); 
         }
 
-        public IMatrix CopyMatrix()
+        public void ClearMatrix()
         {
             throw new NotImplementedException();
         }

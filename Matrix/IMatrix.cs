@@ -30,7 +30,7 @@ namespace PatternLab.Matrix
         bool IsComposite();
         string GetValToStr(int indexI, int indexJ);
 
-        // LAB 
-        IMatrix CopyMatrix();
+        // LAB 5
+        void ClearMatrix();
     }
 }

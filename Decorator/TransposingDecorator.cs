@@ -76,7 +76,7 @@ namespace PatternLab.Decorator
             return _matrix.GetValToStr(indexJ, indexI);
         }
 
-        public IMatrix CopyMatrix()
+        public void ClearMatrix()
         {
             throw new NotImplementedException();
         }
