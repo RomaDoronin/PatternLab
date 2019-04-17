@@ -76,5 +76,11 @@ namespace PatternLab.Matrix
             columnSize = 0;
             rowSize = 0;
         }
+
+        public IMatrix GetBase(out bool isDecorator)
+        {
+            isDecorator = false;
+            return this;
+        }
     }
 }

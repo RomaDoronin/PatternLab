@@ -20,6 +20,11 @@ namespace PatternLab.IncrementalModel
         {
             for (int i = 0; i < _matrixList.Count; i++)
             {
+                bool isDecorator = true;
+                while (isDecorator)
+                {
+                    _matrixList[i] = _matrixList[i].GetBase(out isDecorator);
+                }
                 _matrixList[i].ClearMatrix();
             }
         }

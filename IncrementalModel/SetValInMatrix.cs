@@ -9,14 +9,16 @@ namespace PatternLab.IncrementalModel
 {
     class SetValInMatrix : ACommand
     {
-        private IMatrix _matrix;
+        private List<IMatrix> _matrixList;
+        private int _matrixNum;
         private int _indexI;
         private int _indexJ;
         private int _settingVal;
 
-        public SetValInMatrix(IMatrix matrix, int indexI, int indexJ, int settingVal)
+        public SetValInMatrix(List<IMatrix> matrixList, int matrixNum, int indexI, int indexJ, int settingVal)
         {
-            _matrix = matrix;
+            _matrixList = matrixList;
+            _matrixNum = matrixNum;
             _indexI = indexI;
             _indexJ = indexJ;
             _settingVal = settingVal;
@@ -24,7 +26,7 @@ namespace PatternLab.IncrementalModel
 
         protected override void DoExecute()
         {
-            _matrix.SetVal(_indexI, _indexJ, _settingVal);
+            _matrixList[_matrixNum].SetVal(_indexI, _indexJ, _settingVal);
         }
     }
 }

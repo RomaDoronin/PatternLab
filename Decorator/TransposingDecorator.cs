@@ -75,10 +75,16 @@ namespace PatternLab.Decorator
         {
             return _matrix.GetValToStr(indexJ, indexI);
         }
+        
+        public IMatrix GetBase(out bool isDecorator)
+        {
+            isDecorator = true;
+            return _matrix;
+        }
 
         public void ClearMatrix()
         {
-            throw new NotImplementedException();
+            _matrix.ClearMatrix();
         }
     }
 }

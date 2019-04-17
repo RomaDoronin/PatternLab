@@ -9,29 +9,24 @@ namespace PatternLab.IncrementalModel
 {
     class InitialMatrix : ACommand
     {
-        private IMatrix _matrix = null;
+        private List<IMatrix> _matrixList;
+        private int _matrixNum;
         private int _matrixSize = 0;
 
-        public InitialMatrix(IMatrix matrix, int matrixSize)
+        public InitialMatrix(ref List<IMatrix> matrixList, int matrixNum, int matrixSize)
         {
-            _matrix = matrix;
+            _matrixList = matrixList;
+            _matrixNum = matrixNum;
             _matrixSize = matrixSize;
         }
 
         protected override void DoExecute()
         {
-            if (_matrix == null || _matrixSize == 0)
+            for (int i = 0; i < _matrixSize; i++)
             {
-                throw new NullReferenceException();
-            }
-            else
-            {
-                for (int i = 0; i < _matrixSize; i++)
+                for (int j = 0; j < _matrixSize; j++)
                 {
-                    for (int j = 0; j < _matrixSize; j++)
-                    {
-                        _matrix.SetVal(i, j, i + j);
-                    }
+                    _matrixList[_matrixNum].SetVal(i, j, i + j);
                 }
             }
         }

@@ -48,8 +48,9 @@ namespace PatternLab.Decorator
             _matrix = matrix;
         }
 
-        public IMatrix GetBase()
+        public IMatrix GetBase(out bool isDecorator)
         {
+            isDecorator = true;
             return _matrix;
         }
 

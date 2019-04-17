@@ -156,5 +156,10 @@ namespace PatternLab.Composite
         {
             throw new NotImplementedException();
         }
+
+        public IMatrix GetBase(out bool isDecorator)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

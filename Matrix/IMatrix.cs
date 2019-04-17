@@ -32,5 +32,6 @@ namespace PatternLab.Matrix
 
         // LAB 5
         void ClearMatrix();
+        IMatrix GetBase(out bool isDecorator);
     }
 }
