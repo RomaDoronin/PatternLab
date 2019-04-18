@@ -55,7 +55,7 @@ namespace PatternLab.IncrementalModel
             }
             else
             {
-                Console.WriteLine("Stack of command is empty");
+                Console.WriteLine("List of command is empty");
             }
 
             

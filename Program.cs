@@ -90,22 +90,23 @@ namespace PatternLab
             command.Execute();
         }
 
-        private static void TransMatrix(ref List<IMatrix> matrixList, int matrixNum)
+        private static void ButtonTRANSMATRIX(ref List<IMatrix> matrixList, int matrixNum)
         {
+            Console.WriteLine(" ----------------------------------------------------- Button TRANSMATRIX press");
             DecorMatrixTrans command = new DecorMatrixTrans(ref matrixList, matrixNum);
             command.Execute();
         }
 
         private static void ButtonCHANGE(List<IMatrix> matrixList, int matrixNum, int indexI, int indexJ, int settingVal)
         {
-            Console.WriteLine("Button CHANGE press");
+            Console.WriteLine(" ----------------------------------------------------- Button CHANGE press");
             SetValInMatrix command = new SetValInMatrix(matrixList, matrixNum, indexI, indexJ, settingVal);
             command.Execute();
         }
 
         private static void ButtonUNDO()
         {
-            Console.WriteLine("Button UNDO press");
+            Console.WriteLine(" ----------------------------------------------------- Button UNDO press");
             CommandManager CM = CommandManager.GetInstance();
             CM.Undo();
         }
@@ -215,6 +216,7 @@ namespace PatternLab
             List<IMatrix> matrixList = new List<IMatrix> { matrix0, matrix1 };
             InitializeApplivation(ref matrixList); commandCount++;
 
+            // Work with "matrix1"
             InitMatrix(ref matrixList, 0, 4); commandCount++;
             PrintMatrix(matrixList[0]);
 
@@ -230,10 +232,10 @@ namespace PatternLab
             }
             PrintMatrix(matrixList[0]);
 
-            TransMatrix(ref matrixList, 0); commandCount++;
+            ButtonTRANSMATRIX(ref matrixList, 0); commandCount++;
             PrintMatrix(matrixList[0]);
 
-            // ---
+            // Work with "matrix2"
 
             InitMatrix(ref matrixList, 1, 3); commandCount++;
             PrintMatrix(matrixList[1]);
@@ -244,7 +246,7 @@ namespace PatternLab
             ButtonCHANGE(matrixList, 1, 2, 0, -3); commandCount++;
             PrintMatrix(matrixList[1]);
 
-            TransMatrix(ref matrixList, 1); commandCount++;
+            ButtonTRANSMATRIX(ref matrixList, 1); commandCount++;
             PrintMatrix(matrixList[1]);
 
             for (int i = 0; i < commandCount; i++)
