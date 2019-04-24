@@ -13,7 +13,7 @@ namespace PatternLab.IncrementalModel
         private int _matrixNum;
         private int _matrixSize = 0;
 
-        public InitialMatrix(ref List<IMatrix> matrixList, int matrixNum, int matrixSize)
+        public InitialMatrix(List<IMatrix> matrixList, int matrixNum, int matrixSize)
         {
             _matrixList = matrixList;
             _matrixNum = matrixNum;

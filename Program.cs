@@ -44,7 +44,7 @@ namespace PatternLab
         }
 
         // ----------------------------------------------------------------------- LAB 3
-        private static void Renumber(ref IMatrix matrix)
+        private static void Renumber(IMatrix matrix)
         {
             Random rand = new Random(DateTime.Now.Millisecond);
 
@@ -56,7 +56,7 @@ namespace PatternLab
             matrix = decoratorMatrix;
         }
 
-        private static void Recover(ref IMatrix matrix)
+        private static void Recover(IMatrix matrix)
         {
             bool isDecorator = true;
             do
@@ -65,7 +65,7 @@ namespace PatternLab
             } while (isDecorator);
         }
 
-        private static void GroupMatrix(ref IMatrix matrix, List<IMatrix> matrixList)
+        private static void GroupMatrix(IMatrix matrix, List<IMatrix> matrixList)
         {
             HorizontalMatrixGroup groupMatrix = new HorizontalMatrixGroup();
             
@@ -78,22 +78,22 @@ namespace PatternLab
         }
 
         // ----------------------------------------------------------------------- LAB 5
-        private static void InitializeApplivation(ref List<IMatrix> matrixList)
+        private static void InitializeApplivation(List<IMatrix> matrixList)
         {
-            InitApp command = new InitApp(ref matrixList);
+            InitApp command = new InitApp(matrixList);
             command.Execute();
         }
 
-        private static void InitMatrix(ref List<IMatrix> matrixList, int matrixNum, int matrixSize)
+        private static void InitMatrix(List<IMatrix> matrixList, int matrixNum, int matrixSize)
         {
-            InitialMatrix command = new InitialMatrix(ref matrixList, matrixNum, matrixSize);
+            InitialMatrix command = new InitialMatrix(matrixList, matrixNum, matrixSize);
             command.Execute();
         }
 
-        private static void ButtonTRANSMATRIX(ref List<IMatrix> matrixList, int matrixNum)
+        private static void ButtonTRANSMATRIX(List<IMatrix> matrixList, int matrixNum)
         {
             Console.WriteLine(" ----------------------------------------------------- Button TRANSMATRIX press");
-            DecorMatrixTrans command = new DecorMatrixTrans(ref matrixList, matrixNum);
+            DecorMatrixTrans command = new DecorMatrixTrans(matrixList, matrixNum);
             command.Execute();
         }
 
@@ -109,6 +109,18 @@ namespace PatternLab
             Console.WriteLine(" ----------------------------------------------------- Button UNDO press");
             CommandManager CM = CommandManager.GetInstance();
             CM.Undo();
+        }
+
+        private static List<IMatrix> GetMatrixList(int matrixCount)
+        {
+            List<IMatrix> matrixList = new List<IMatrix>();
+
+            for (int i = 0; i < matrixCount; i++)
+            {
+                matrixList.Add(null);
+            }
+
+            return matrixList;
         }
 
         /* Configurator Code End */
@@ -133,13 +145,13 @@ namespace PatternLab
 #endif
             // ------------------------------------------------------------------- LAB 3
 #if (LAB3)
-            Renumber(ref matrix);
+            Renumber(matrix);
             PrintMatrix(matrix);
 
-            Renumber(ref matrix);
+            Renumber(matrix);
             PrintMatrix(matrix);
 
-            Recover(ref matrix);
+            Recover(matrix);
             PrintMatrix(matrix);
 #endif
             // ------------------------------------------------------------------- LAB 4
@@ -158,7 +170,7 @@ namespace PatternLab
             List<IMatrix> matrixList = new List<IMatrix>() {
                 matrix0, matrix1, matrix3, matrix4
             };
-            GroupMatrix(ref groupMatrix, matrixList);
+            GroupMatrix(groupMatrix, matrixList);
             PrintMatrix(groupMatrix);
 
             groupMatrix = new TransposingDecorator(groupMatrix);
@@ -175,7 +187,7 @@ namespace PatternLab
             MatrixInitializer.InitMatrix(matrix3, 7, 10, 1, 3, LAB_MODE.LAB4, 3);
             
             List<IMatrix> matrixList1 = new List<IMatrix>() { matrix0, matrix1, matrix3 };
-            GroupMatrix(ref groupmatrix0, matrixList1);
+            GroupMatrix(groupmatrix0, matrixList1);
             PrintMatrix(groupmatrix0);
             groupmatrix0 = new TransposingDecorator(groupmatrix0);
             PrintMatrix(groupmatrix0);
@@ -186,7 +198,7 @@ namespace PatternLab
             IMatrix matrix5 = new SparseMatrix();
             MatrixInitializer.InitMatrix(matrix5, 7, 10, 2, 3, LAB_MODE.LAB4, 5);
             List<IMatrix> matrixList2 = new List<IMatrix>() { matrix4, matrix5 };
-            GroupMatrix(ref groupmatrix1, matrixList2);
+            GroupMatrix(groupmatrix1, matrixList2);
             groupmatrix1 = new TransposingDecorator(groupmatrix1);
 
             PrintMatrix(groupmatrix1);
@@ -195,13 +207,13 @@ namespace PatternLab
             IMatrix matrix6 = new NormalMatrix();
             MatrixInitializer.InitMatrix(matrix6, 7, 10, 1, 1, LAB_MODE.LAB4, 6);
             List<IMatrix> matrixList3 = new List<IMatrix>() { matrix6 };
-            GroupMatrix(ref groupMatrix3, matrixList3);
+            GroupMatrix(groupMatrix3, matrixList3);
 
             PrintMatrix(groupMatrix3);
 
             IMatrix groupsMatrix = new HorizontalMatrixGroup();
             List<IMatrix> groupList = new List<IMatrix>() { groupmatrix0, groupmatrix1, groupMatrix3 };
-            GroupMatrix(ref groupsMatrix, groupList);
+            GroupMatrix(groupsMatrix, groupList);
             groupsMatrix = new TransposingDecorator(groupsMatrix);
 
             PrintMatrix(groupsMatrix);
@@ -211,13 +223,12 @@ namespace PatternLab
 
 #if (LAB5)
             int commandCount = 0;
-            IMatrix matrix0 = new NormalMatrix();
-            IMatrix matrix1 = new SparseMatrix();
-            List<IMatrix> matrixList = new List<IMatrix> { matrix0, matrix1 };
-            InitializeApplivation(ref matrixList); commandCount++;
+            int matrixListCount = 5;
+            List<IMatrix> matrixList = GetMatrixList(matrixListCount);
+            InitializeApplivation(matrixList); commandCount++;
 
             // Work with "matrix1"
-            InitMatrix(ref matrixList, 0, 4); commandCount++;
+            InitMatrix(matrixList, 0, 4); commandCount++;
             PrintMatrix(matrixList[0]);
 
             ButtonCHANGE(matrixList, 0, 2, 1, -7); commandCount++;
@@ -232,12 +243,12 @@ namespace PatternLab
             }
             PrintMatrix(matrixList[0]);
 
-            ButtonTRANSMATRIX(ref matrixList, 0); commandCount++;
+            ButtonTRANSMATRIX(matrixList, 0); commandCount++;
             PrintMatrix(matrixList[0]);
 
             // Work with "matrix2"
 
-            InitMatrix(ref matrixList, 1, 3); commandCount++;
+            InitMatrix(matrixList, 1, 3); commandCount++;
             PrintMatrix(matrixList[1]);
 
             ButtonCHANGE(matrixList, 1, 1, 0, -4); commandCount++;
@@ -246,7 +257,7 @@ namespace PatternLab
             ButtonCHANGE(matrixList, 1, 2, 0, -3); commandCount++;
             PrintMatrix(matrixList[1]);
 
-            ButtonTRANSMATRIX(ref matrixList, 1); commandCount++;
+            ButtonTRANSMATRIX(matrixList, 1); commandCount++;
             PrintMatrix(matrixList[1]);
 
             for (int i = 0; i < commandCount; i++)

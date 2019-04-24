@@ -11,7 +11,7 @@ namespace PatternLab.IncrementalModel
     {
         private List<IMatrix> _matrixList;
 
-        public InitApp(ref List<IMatrix> matrixList)
+        public InitApp(List<IMatrix> matrixList)
         {
             _matrixList = matrixList;
         }
@@ -20,12 +20,7 @@ namespace PatternLab.IncrementalModel
         {
             for (int i = 0; i < _matrixList.Count; i++)
             {
-                bool isDecorator = true;
-                while (isDecorator)
-                {
-                    _matrixList[i] = _matrixList[i].GetBase(out isDecorator);
-                }
-                _matrixList[i].ClearMatrix();
+                _matrixList[i] = new NormalMatrix();
             }
         }
     }

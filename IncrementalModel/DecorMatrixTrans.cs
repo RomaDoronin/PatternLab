@@ -14,14 +14,14 @@ namespace PatternLab.IncrementalModel
         private List<IMatrix> _matrixList;
         private int _matrixNum;
 
-        public DecorMatrixTrans(ref List<IMatrix> matrixList, int matrixNum)
+        public DecorMatrixTrans(List<IMatrix> matrixList, int matrixNum)
         {
             _matrixList = matrixList;
             _matrixNum = matrixNum;
         }
 
         private IMatrix _matrix;
-        public DecorMatrixTrans(ref IMatrix matrix)
+        public DecorMatrixTrans(IMatrix matrix)
         {
             _matrix = matrix;
         }

@@ -34,7 +34,7 @@ namespace PatternLab.Decorator
             renumColumnIndex[columnIndex2] = columnIndex1;
         }
 
-        private void CheckRowColumnNum(ref int indexI, ref int indexJ)
+        private void CheckRowColumnNum(int indexI, int indexJ)
         {
             if (renumRowIndex.ContainsKey(indexI))
                 indexI = renumRowIndex[indexI];
@@ -67,13 +67,13 @@ namespace PatternLab.Decorator
 
         public void SetVal(int indexI, int indexJ, int val)
         {
-            CheckRowColumnNum(ref indexI, ref indexJ);
+            CheckRowColumnNum(indexI, indexJ);
             _matrix.SetVal(indexI, indexJ, val); 
         }
 
         public int GetVal(int indexI, int indexJ)
         {
-            CheckRowColumnNum(ref indexI, ref indexJ);
+            CheckRowColumnNum(indexI, indexJ);
             return _matrix.GetVal(indexI, indexJ);
         }
         
@@ -104,7 +104,7 @@ namespace PatternLab.Decorator
 
         void funcDecor(IMatrix matrix, int i, int j)
         {
-			CheckRowColumnNum(ref i, ref j);
+			CheckRowColumnNum(i, j);
             func(matrix, i, j); 
         }
 
